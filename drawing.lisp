@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /home/manuel/bknr-cvs/cvs/thirdparty/cl-gd/drawing.lisp,v 1.1 2004/06/23 08:27:10 hans Exp $
+;;; $Header: /home/manuel/bknr-cvs/cvs/thirdparty/cl-gd/drawing.lisp,v 1.2 2004/09/29 17:59:00 david Exp $
 
 ;;; Copyright (c) 2003, Dr. Edmund Weitz.  All rights reserved.
 
@@ -28,6 +28,14 @@
 ;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (in-package :cl-gd)
+
+(defun get-pixel (x y &key (image *default-image*))
+  "Return the color of the pixel at point \(X,Y)."
+  (check-type image image)
+  (with-transformed-alternative
+      ((x x-transformer)
+       (y y-transformer))
+    (gd-image-get-pixel (img image) x y)))
 
 (defun set-pixel (x y &key (color *default-color*) (image *default-image*))
   "Draws a pixel with color COLOR at point \(X,Y)."
