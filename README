@@ -1,0 +1,65 @@
+Complete documentation for CL-GD can be found in the 'doc'
+directory. Make sure to read it if you want GIF support!
+
+CL-GD also supports Nikodemus Siivola's HYPERDOC, see
+<http://common-lisp.net/project/hyperdoc/> and
+<http://www.cliki.net/hyperdoc>.
+
+1. Installation
+
+1.1. Download and install a recent version of asdf.
+
+1.2. Download and install UFFI. CL-GD needs at least version 1.3.4 of
+     UFFI to work properly. However, as of August 2003, only
+     AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported
+     because CL-GD needs the new UFFI macros WITH-CAST-POINTER and
+     DEF-FOREIGN-VAR which haven't yet been ported to all UFFI
+     platforms.
+
+1.3. Download and install a recent version of GD and its supporting
+     libraries libpng, zlib, libjpeg, libiconv, and libfreetype. CL-GD has
+     been tested and developed with GD 2.0.15, older version probably won't
+     work. Note that you won't be able to compile CL-GD unless you have
+     installed all supporting libraries. This is different from using
+     GD directly from C where you only have to install the libraries
+     you intend to use.
+
+1.4. Unzip and untar the file cl-gd.tgz and put the resulting
+     directory wherever you want, then cd into this directory.
+
+1.5. Compile cl-gd-glue.c into a shared library for your platform. On
+     Linux this would be
+
+       gcc -fPIC -c cl-gd-glue.c
+       ld -lgd -lz -lpng -ljpeg -lfreetype -lm -liconv -shared cl-gd-glue.o -o cl-gd-glue.so
+       rm cl-gd-glue.o
+
+1.6. Make sure that cl-gd.asd can be seen from asdf (this is usually
+     achieved by a symbolic link), start your favorite Lisp, and compile
+     CL-GD:
+
+       (asdf:oos 'asdf:compile-op :cl-gd)
+
+     From now on you can simply load CL-GD into a running Lisp image
+     with
+
+       (asdf:oos 'asdf:load-op :cl-gd)
+
+2. Test
+
+CL-GD comes with a simple test suite that can be used to check if it's
+basically working. Note that this'll only test a subset of CL-GD. To
+run the tests load CL-GD and then
+
+       (asdf:oos 'asdf:load-op :cl-gd-test)
+       (cl-gd-test:test)
+
+If you have the georgiab.ttf TrueType font from Microsoft you can also
+check the FreeType support of CL-GD with
+
+       (cl-gd-test:test #p"/usr/X11R6/lib/X11/fonts/truetype/georgiab.ttf")
+
+where you should obviously replace the path above with the full path
+to the font on your machine.
+
+(See the note about failed tests in the documentation.)
