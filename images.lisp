@@ -110,7 +110,9 @@ done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
     (unless (probe-file file-name)
       (error "File ~S could not be found" file-name))
     (when (pathnamep file-name)
-      (setq file-name (namestring file-name)))
+      (setq file-name
+	    #+cmu (ext:unix-namestring file-name)
+	    #-cmu (namestring file-name)))
     (with-foreign-object (err :int)
       (with-cstring (c-file-name file-name)
         (let ((image (ecase %type
