@@ -1,4 +1,4 @@
-/* Copyright (c) 2003, Dr. Edmund Weitz.  All rights reserved. 
+/* Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved. 
 
    Redistribution and use in source and binary forms, with or without 
    modification, are permitted provided that the following conditions 
@@ -34,6 +34,23 @@ gdImagePtr gdImageCreateFromJpegFile (char *filename, int *err) {
   
   if (in = fopen(filename, "rb")) {
     im = gdImageCreateFromJpeg(in);
+    if (im == NULL) {
+      *err = 0;
+      return NULL;
+    }
+    fclose(in);
+    return im;
+  }
+  *err = errno;
+  return NULL;
+}
+
+gdImagePtr gdImageCreateFromGifFile (char *filename, int *err) {
+  FILE *in;
+  gdImagePtr im;
+  
+  if (in = fopen(filename, "rb")) {
+    im = gdImageCreateFromGif(in);
     if (im == NULL) {
       *err = 0;
       return NULL;
