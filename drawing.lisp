@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/drawing.lisp,v 1.24 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/drawing.lisp,v 1.26 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -28,6 +28,14 @@
 ;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (in-package :cl-gd)
+
+(defun get-pixel (x y &key (image *default-image*))
+  "Gets the color associated with point \(X,Y)."
+  (check-type image image)
+  (with-transformed-alternative
+      ((x x-transformer)
+       (y y-transformer))
+    (gd-image-get-pixel (img image) x y)))
 
 (defun set-pixel (x y &key (color *default-color*) (image *default-image*))
   "Draws a pixel with color COLOR at point \(X,Y)."
@@ -315,17 +323,17 @@ left corner \(X1, Y1) and lower right corner \(X2, Y2)."
 which should be a list \(X1 Y1 X2 Y2). The previous clipping rectangle
 is guaranteed to be restored before the macro exits."
   ;; we rebind everything so we have left-to-right evaluation
-  (rebinding (rectangle image)
+  (with-rebinding (rectangle image)
     (with-unique-names (%x1 %y1 %x2 %y2)
       `(multiple-value-bind (,%x1 ,%y1 ,%x2 ,%y2)
-        (without-transformations
-         (clipping-rectangle* ,image))
-        (unwind-protect
-          (progn
-            (setf (clipping-rectangle ,image) ,rectangle)
-            ,@body)
-          (without-transformations
-           (set-clipping-rectangle* ,%x1 ,%y1 ,%x2 ,%y2 ,image)))))))
+           (without-transformations
+             (clipping-rectangle* ,image))
+         (unwind-protect
+             (progn
+               (setf (clipping-rectangle ,image) ,rectangle)
+               ,@body)
+           (without-transformations
+             (set-clipping-rectangle* ,%x1 ,%y1 ,%x2 ,%y2 ,image)))))))
 
 (defmacro with-clipping-rectangle* ((x1 y1 x2 y2 &key (image '*default-image*)) &body body)
   "Executes BODY with the clipping rectangle of IMAGE set to the
@@ -333,14 +341,14 @@ rectangle with upper left corner \(X1, Y1) and lower right corner
 \(X2, Y2). The previous clipping rectangle is guaranteed to be
 restored before the macro exits."
   ;; we rebind everything so we have left-to-right evaluation
-  (rebinding (x1 y1 x2 y2 image)
+  (with-rebinding (x1 y1 x2 y2 image)
     (with-unique-names (%x1 %y1 %x2 %y2)
       `(multiple-value-bind (,%x1 ,%y1 ,%x2 ,%y2)
-        (without-transformations
-         (clipping-rectangle* ,image))
-        (unwind-protect
-          (progn
-            (set-clipping-rectangle* ,x1 ,y1 ,x2 ,y2 ,image)
-            ,@body)
-          (without-transformations
-           (set-clipping-rectangle* ,%x1 ,%y1 ,%x2 ,%y2 ,image)))))))
+           (without-transformations
+             (clipping-rectangle* ,image))
+         (unwind-protect
+             (progn
+               (set-clipping-rectangle* ,x1 ,y1 ,x2 ,y2 ,image)
+               ,@body)
+           (without-transformations
+             (set-clipping-rectangle* ,%x1 ,%y1 ,%x2 ,%y2 ,image)))))))

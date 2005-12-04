@@ -45,6 +45,7 @@ gdImagePtr gdImageCreateFromJpegFile (char *filename, int *err) {
   return NULL;
 }
 
+#ifndef GD_DONT_USE_GIF
 gdImagePtr gdImageCreateFromGifFile (char *filename, int *err) {
   FILE *in;
   gdImagePtr im;
@@ -61,6 +62,7 @@ gdImagePtr gdImageCreateFromGifFile (char *filename, int *err) {
   *err = errno;
   return NULL;
 }
+#endif
 
 gdImagePtr gdImageCreateFromPngFile (char *filename, int *err) {
   FILE *in;

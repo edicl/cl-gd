@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/misc.lisp,v 1.12 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/misc.lisp,v 1.13 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -195,7 +195,7 @@ destination image."
   image)
 
 (defmacro do-rows ((y-var &optional (image '*default-image*)) &body body)
-  (rebinding (image)
+  (with-rebinding (image)
     (with-unique-names (img width height true-color-p raw-pixels row x-var inner-body)
       `(let* ((,img (img ,image))
               (,width (gd-image-get-sx ,img))

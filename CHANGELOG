@@ -1,3 +1,26 @@
+Version 0.5.1
+2005-10-04
+Support for OpenMCL via CFFI (thanks to Bryan O'Connor)
+
+Version 0.5.0
+2005-09-26
+Experimental CLISP/CFFI support (thanks to Luis Oliveira)
+Don't redefine what's already there (for LispWorks)
+
+Version 0.4.8
+2005-05-17
+Re-enabled the ability to build without GIF support
+
+Version 0.4.7
+2005-05-07
+Added GET-PIXEL (provided by Alan Shields)
+
+Version 0.4.6
+2005-03-31
+Fixed typo in WITH-IMAGE* (thanks to Peter Barabas)
+Handle CMUCL search lists correctly (thanks to Hans Hübner)
+Added -lc option to linker call and included makefile (thanks to Hans Hübner)
+
 Version 0.4.5
 2005-03-16
 Fixed type check in MAKE-STREAM-FN (thanks to Walter C. Pelissero)

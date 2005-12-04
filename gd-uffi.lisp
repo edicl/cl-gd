@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/gd-uffi.lisp,v 1.27 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/gd-uffi.lisp,v 1.28 2005/05/17 16:59:22 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -180,6 +180,7 @@
   :returning gd-image-ptr
   :module "gd")
 
+#-:cl-gd-no-gif
 (def-function ("gdImageCreateFromGifFile" gd-image-create-from-gif-file)
     ((filename :cstring)
      (err (* :int)))
@@ -225,6 +226,7 @@
   :returning :pointer-void
   :module "gd")
 
+#-:cl-gd-no-gif
 (def-function ("gdImageGifPtr" gd-image-gif-ptr)
     ((im gd-image-ptr)
      (size (* :int)))

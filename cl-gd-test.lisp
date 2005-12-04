@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.lisp,v 1.23 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.lisp,v 1.24 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -39,8 +39,8 @@
 (defparameter *test-directory*
   (merge-pathnames (make-pathname :directory '(:relative "test"))
                    (make-pathname :name nil
-                                  :type :unspecific
-                                  :version :unspecific
+                                  :type nil
+                                  :version :newest
                                   :defaults cl-gd.system:*cl-gd-directory*))
   
   "Where test files are put.")

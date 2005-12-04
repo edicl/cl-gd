@@ -1,5 +1,5 @@
 Complete documentation for CL-GD can be found in the 'doc'
-directory. Make sure to read it if you want GIF support!
+directory.
 
 CL-GD also supports Nikodemus Siivola's HYPERDOC, see
 <http://common-lisp.net/project/hyperdoc/> and
@@ -33,6 +33,10 @@ CL-GD also supports Nikodemus Siivola's HYPERDOC, see
        gcc -fPIC -c cl-gd-glue.c
        ld -lgd -lz -lpng -ljpeg -lfreetype -lm -liconv -shared cl-gd-glue.o -o cl-gd-glue.so
        rm cl-gd-glue.o
+
+     For Mac OS X, use
+
+       gcc -lgd -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib
 
 1.6. Make sure that cl-gd.asd can be seen from asdf (this is usually
      achieved by a symbolic link), start your favorite Lisp, and compile

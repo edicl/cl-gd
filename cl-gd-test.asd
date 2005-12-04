@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.asd,v 1.7 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.asd,v 1.8 2005/09/26 12:00:59 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -40,6 +40,7 @@
                  :defaults (parse-namestring *load-truename*)))
 
 (defsystem #:cl-gd-test
-    :components ((:file "cl-gd-test"))
-    :depends-on (:cl-gd))
+  :version "0.4.8"
+  :components ((:file "cl-gd-test"))
+  :depends-on (:cl-gd))
 

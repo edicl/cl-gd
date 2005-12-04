@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/specials.lisp,v 1.25 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/specials.lisp,v 1.27 2005/10/04 08:45:44 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -121,23 +121,23 @@ WITH-FONT.")
 (defconstant +gd-cmp-true-color+ 256
   "One image is a true-color image, the other one is palette-based.")
 
-(defvar *shared-library-directories* `(,(namestring (make-pathname :device :unspecific
-                                                                   :name nil
-                                                                   :type :unspecific
-                                                                   :version :unspecific
-                                                                   :defaults cl-gd.system:*cl-gd-directory*))
-                                       "/usr/local/lib/"
-                                       "/usr/lib/"
-                                       "/usr/lib/cl-gd/"
-                                       "/cygwin/usr/local/lib/"
-                                       "/cygwin/usr/lib/")
+(defvar *shared-library-directories*
+  `(,(namestring (make-pathname :name nil
+                                :type nil
+                                :version :newest
+                                :defaults cl-gd.system:*cl-gd-directory*))
+     "/usr/local/lib/"
+     "/usr/lib/"
+     "/usr/lib/cl-gd/"
+     "/cygwin/usr/local/lib/"
+     "/cygwin/usr/lib/")
   "A list of directories where UFFI tries to find cl-gd-glue.so")
-(defvar *shared-library-types* '("so" "dll")
+(defvar *shared-library-types* '("so" "dll" "dylib")
   "The list of types a shared library can have. Used when looking for
 cl-gd-glue.so")
 (defvar *shared-library-drive-letters* '("C" "D" "E" "F" "G")
-  "The list of drive letters (used by Wintendo) used when looking for
-cl-gd-glue.so.")
+  "The list of drive letters \(used by Wintendo) used when looking for
+cl-gd-glue.dll.")
 
 (defvar *gd-supporting-libraries* '("c" "gd" "png" "z" "jpeg" "freetype" "iconv" "m")
   "The libraries which are needed by cl-gd-glues.so \(and GD

@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/colors.lisp,v 1.22 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/colors.lisp,v 1.23 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -167,13 +167,13 @@ restored before the macro exits. Note that the line width is measured
 in pixels and is not affected by WITH-TRANSFORMATION."
   (with-unique-names (old-thickness)
     ;; we rebind everything so we have left-to-right evaluation
-    (rebinding (thickness image)
+    (with-rebinding (thickness image)
       `(let ((,old-thickness (thickness ,image)))
-        (unwind-protect
-          (progn
-            (setf (thickness ,image) ,thickness))
-          ,@body)
-      (setf (thickness ,image) ,old-thickness)))))
+         (unwind-protect
+             (progn
+               (setf (thickness ,image) ,thickness))
+           ,@body)
+         (setf (thickness ,image) ,old-thickness)))))
 
 (defun alpha-blending-p (&optional (image *default-image*))
   "Returns whether pixels drawn on IMAGE will be copied literally

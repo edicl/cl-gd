@@ -28,13 +28,24 @@ CL-GD is a library for Common Lisp which provides an interface to the
 <a href="http://www.boutell.com/gd/">GD Graphics Library</a> for the
 dynamic creation of images. It is based on <a
 href="http://uffi.b9.com/">UFFI</a> and should thus be portable to all
-CL implementations supported by UFFI.  (A version which also works with CLISP is available from <a href="http://ungil.com/cl-gd-clisp.tgz">http://ungil.com/cl-gd-clisp.tgz</a> thanks to Carlos Ungil.)
+CL implementations supported by UFFI.
+<p>
+A version which also works with CLISP is available from <a
+href="http://ungil.com/cl-gd-clisp.tgz">http://ungil.com/cl-gd-clisp.tgz</a>
+thanks to Carlos Ungil.  Also, beginning from version 0.5.0/0.5.1, CL-GD
+contains initial code to support CLISP and OpenMCL via <a
+href="http://common-lisp.net/project/cffi/">CFFI</a> (<a href="http://common-lisp.net/pipermail/cl-gd-devel/2005-September/000030.html">thanks to Luis
+Oliveira</a> and Bryan O'Connor).  Please try it and report to <a href="#mail">the mailing list</a> if you 
+have problems.
 <p>
 The focus of CL-GD is convenience and correctness, not necessarily speed. If you think CL-GD is too slow and you're concerned about speed, <a href="#mail">contact me</a> before you start coding in C... :)
 <p>
 CL-GD comes with a <a
 href="http://www.opensource.org/licenses/bsd-license.php">BSD-style
 license</a> so you can basically do with it whatever you want. Please send bug reports to <a href="#mail">the mailing list</a> mentioned below if you encounter any problems with CL-GD. (I'm glad to fix CL-GD but I can't do much about GD, of course. So if CL-GD basically works for you but you encounter seemingly strange behaviour when drawing please try if and how you can achieve the intended result with GD directly. That would help me a lot. Thanks.)
+<p>
+CL-GD is used by <a href="http://www.eboy.com/">Eboy</a>.
+
 <p>
 <font color=red>Download shortcut:</font> <a href="http://weitz.de/files/cl-gd.tar.gz">http://weitz.de/files/cl-gd.tar.gz</a>.
 </blockquote>
@@ -140,6 +151,7 @@ See below for more examples.
   </ul>
   <li><a href="#drawing">Drawing and filling</a>
   <ul>
+    <li><a href="#get-pixel"><code>get-pixel</code></a>
     <li><a href="#set-pixel"><code>set-pixel</code></a>
     <li><a href="#set-pixels"><code>set-pixels</code></a>
     <li><a href="#draw-line"><code>draw-line</code></a>
@@ -185,18 +197,23 @@ See below for more examples.
 
 CL-GD together with this documentation can be downloaded from <a
 href="http://weitz.de/files/cl-gd.tar.gz">http://weitz.de/files/cl-gd.tar.gz</a>. The
-current version is 0.4.5. A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&searchon=names&subword=1&version=all&release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
+current version is 0.5.1. A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&searchon=names&subword=1&version=all&release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
 for <a href="http://www.cliki.net/gentoo">Gentoo Linux</a> thanks to Matthew Kennedy. Otherwise, proceed like this:
 <ul>
 <li>Download and install a recent version of <a href="http://www.cliki.net/asdf">asdf</a>.
-<li>Download and install <a href="http://uffi.b9.com/">UFFI</a>. CL-GD needs at least version&nbsp;1.3.4 of UFFI to work properly. However, as of August 2003, only AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported because CL-GD needs the new UFFI macros <a href="http://uffi.b9.com/manual/with-cast-pointer.html"><code>WITH-CAST-POINTER</code></a> and <a href="http://uffi.b9.com/manual/def-foreign-var.html"><code>DEF-FOREIGN-VAR</code></a> which haven't yet been ported to all UFFI platforms.
+<li>Download and install <a href="http://uffi.b9.com/">UFFI</a>. CL-GD needs at least version&nbsp;1.3.4 of UFFI to work properly. However, as of August 2003, only AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported because CL-GD needs the new UFFI macros <a href="http://uffi.b9.com/manual/with-cast-pointer.html"><code>WITH-CAST-POINTER</code></a> and <a href="http://uffi.b9.com/manual/def-foreign-var.html"><code>DEF-FOREIGN-VAR</code></a> which haven't yet been ported to all UFFI platforms.  <b>Note:</b> For CLISP or OpenMCL download and install <a
+href="http://common-lisp.net/project/cffi/">CFFI</a> instead.
 <li>Download and install a recent version of <a href="http://www.boutell.com/gd/">GD</a> and its supporting libraries <a href="http://www.libpng.org/pub/png/">libpng</a>, <a href="http://www.info-zip.org/pub/infozip/zlib/">zlib</a>, <a href="http://www.ijg.org/">libjpeg</a>, <a href="http://www.gnu.org/software/libiconv/">libiconv</a>, and <a href="http://www.freetype.org/">libfreetype</a>. CL-GD has been tested and developed with GD 2.0.28, older version probably won't work. Note that you won't be able to compile CL-GD unless you have installed <em>all</em> supporting libraries. This is different from using GD directly from C where you only have to install the libraries you intend to use.
 <li>Download <a href="http://weitz.de/files/cl-gd.tar.gz"><code>cl-gd.tar.gz</code></a>, unzip and untar the file and put the resulting directory wherever you want, then cd into this directory.
-<li>Compile <code>cl-gd-glue.c</code> into a shared library for your platform. On Linux this would be
+<li>Compile <code>cl-gd-glue.c</code> into a shared library for your platform. On FreeBSD or Linux this would be
 <pre>
 gcc -fPIC -c cl-gd-glue.c
 ld -lgd -lz -lpng -ljpeg -lfreetype -lm -liconv -shared cl-gd-glue.o -o cl-gd-glue.so
 rm cl-gd-glue.o
+</pre>
+For Mac OS X, use
+<pre>
+gcc -lgd -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib
 </pre>
 <li>Make sure that <code>cl-gd.asd</code> can be seen from asdf (this is usually achieved by a symbolic link), start your favorite Lisp, and compile CL-GD:
 <pre>
@@ -206,6 +223,8 @@ rm cl-gd-glue.o
 <pre>
 (asdf:oos 'asdf:load-op :cl-gd)
 </pre>
+<li>To build <em>without</em> GIF support compile the C library with the option <code>-DGD_DONT_USE_GIF</code> and push the symbol <code>:CL-GD-NO-GIF</code> onto <a href="http://www.lispworks.com/documentation/HyperSpec/Body/v_featur.htm"><code>*FEATURES*</code></a> <em>before</em> compiling CL-GD.
+
 <li>CL-GD comes with a simple test suite that can be used to check if it's
 basically working. Note that this'll only test a subset of CL-GD. To
 run the tests load CL-GD and then
@@ -471,12 +490,12 @@ yields <a href="http://cl-cookbook.sf.net/io.html#faith">faithful output</a> of 
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="write-image-to-file"><b>write-image-to-file</b> <i>file-name type if-exists <tt>&amp;key</tt> <tt>&amp;allow-other-keys</tt></i> =&gt; <i>image</i></a>
+<br><a class=none name="write-image-to-file"><b>write-image-to-file</b> <i>file-name <tt>&amp;key</tt> type if-exists <tt>&amp;allow-other-keys</tt></i> =&gt; <i>image</i></a>
 
 <blockquote><br>
 Writes image <code><i>image</i></code> to the file specified by <code><i>file-name</i></code> (which is
 either a pathname or a string). The <code><i>type</i></code> argument is interpreted as in <a href="#write-image-to-stream"><code>WRITE-IMAGE-TO-STREAM</code></a>. If it is not provided it will be guessed from the <code>PATHNAME-TYPE</code> of
-<code><i>file-name</i></code>. The <code><i>if-exists</i></code> keyword argument is given to <a href="http://www.lispworks.com/reference/HyperSpec/Body/f_open.htm"><code>OPEN</code></a>,
+<code><i>file-name</i></code>. The <code><i>if-exists</i></code> keyword argument is given to <a href="http://www.lispworks.com/documentation/HyperSpec/Body/f_open.htm"><code>OPEN</code></a>,
 the rest of the keyword arguments are handed over to the corresponding <code>WRITE-<i>XXX</i>-TO-STREAM</code> function. 
 </blockquote>
 
@@ -865,6 +884,13 @@ Executes <code><i>form*</i></code> without any transformations applied.
 <br>&nbsp;<br><h3><a href="#contents" name="drawing" class=none>Drawing and filling</a></h3>
 
 This section (and the next one about <a href="#strings">strings</a>) finally describes how you can actually change the visual appearance of an <a href="#images">image</a>. You can set single pixels, draw lines or geometric figures, and fill regions. Note that the current <a href="#transformations">transformation</a> (if any) applies to the input and output of these functions.
+
+<p><br>[Function]
+<br><a class=none name="get-pixel"><b>get-pixel</b> <i>x y <tt>&amp;key</tt> image</i> =&gt; <i>color</i></a>
+
+<blockquote><br>
+Returns the <a href="#colors">color</a> of the pixel specified by <code><i>x</i></code> and <code><i>y</i></code>.
+</blockquote>
 
 <p><br>[Function]
 <br><a class=none name="set-pixel"><b>set-pixel</b> <i>x y <tt>&amp;key</tt> color image</i> =&gt; <i>x, y</i></a>
@@ -1390,8 +1416,9 @@ for <a href="http://uffi.b9.com/">UFFI</a> without which CL-GD would
 not have been possible. Kevin was also extremely helpful when I needed
 functionality which wasn't yet part of UFFI. Thanks to <a href="http://huebner.org/">Hans
 H&uuml;bner</a> for the GIF patches. Thanks to <a href='http://bl0rg.net/'>Manuel Odendahl</a> for lots of useful patches.
+Thanks to Luis Oliveira for CLISP/CFFI support.
 <p>
-$Header: /usr/local/cvsrep/gd/doc/index.html,v 1.48 2005/03/16 15:31:40 edi Exp $
+$Header: /usr/local/cvsrep/gd/doc/index.html,v 1.56 2005/10/04 08:45:45 edi Exp $
 <p><a href="http://weitz.de/index.html">BACK TO MY HOMEPAGE</a>
 
 </body>

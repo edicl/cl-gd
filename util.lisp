@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.10 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.12 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -29,6 +29,10 @@
 
 (in-package :cl-gd)
 
+#+:lispworks
+(import 'lw:with-unique-names)
+
+#-:lispworks
 (defmacro with-unique-names ((&rest bindings) &body body)
   "Syntax: WITH-UNIQUE-NAMES ( { var | (var x) }* ) declaration* form*
 
@@ -59,7 +63,13 @@ are discarded \(that is, the body is an implicit PROGN)."
                  bindings)
          ,@body))
 
-(defmacro rebinding (bindings &body body)
+#+:lispworks
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (setf (macro-function 'with-rebinding)
+          (macro-function 'lw:rebinding)))
+
+#-:lispworks
+(defmacro with-rebinding (bindings &body body)
   "REBINDING ( { var | (var prefix) }* ) form*
 
 Evaluates a series of forms in the lexical environment that is

@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/images.lisp,v 1.27 2005/03/16 15:31:39 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/images.lisp,v 1.31 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -65,7 +65,7 @@ the image bound to NAME. If TRUE-COLOR is true, creates a true color
 image. The image is guaranteed to be destroyed before this macro
 exits."
   ;; we rebind everything so we have left-to-right evaluation
-  (rebinding (width height true-color)
+  (with-rebinding (width height true-color)
     `(with-safe-alloc (,name
 		       (create-image ,width ,height ,true-color)
 		       (destroy-image ,name))
@@ -76,7 +76,7 @@ exits."
 the image bound to *DEFAULT-IMAGE*. If TRUE-COLOR is true, creates a
 true color image. The image is guaranteed to be destroyed before this
 macro exits."
-  `(with-image (*default-image* ,width, height ,true-color)
+  `(with-image (*default-image* ,width ,height ,true-color)
     ,@body))
 
 (defun create-image-from-file (file-name &optional type)
@@ -102,6 +102,7 @@ done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
                           #-:win32
                           ((string-equal pathname-type "xpm")
 			   :xpm)
+                          #-:cl-gd-no-gif
 			  ((string-equal pathname-type "gif")
                             :gif)))))
     (unless %type
@@ -110,8 +111,8 @@ done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
       (error "File ~S could not be found" file-name))
     (when (pathnamep file-name)
       (setq file-name
-	    #+cmu (ext:unix-namestring file-name)
-	    #-cmu (namestring file-name)))
+              #+:cmu (ext:unix-namestring file-name)
+              #-:cmu (namestring file-name)))
     (with-foreign-object (err :int)
       (with-cstring (c-file-name file-name)
         (let ((image (ecase %type
@@ -128,6 +129,7 @@ done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
                        #-:win32
                        ((:xpm)
 			 (gd-image-create-from-xpm c-file-name))
+                       #-:cl-gd-no-gif
 		       ((:gif)
                          (gd-image-create-from-gif-file c-file-name err)))))
           (cond ((null-pointer-p image)
@@ -148,7 +150,7 @@ to NAME. The type of the image can be provied as TYPE or otherwise it
 will be guessed from the PATHNAME-TYPE of FILE-NAME. The image is
 guaranteed to be destroyed before this macro exits."
   ;; we rebind everything so we have left-to-right evaluation
-  (rebinding (file-name type)
+  (with-rebinding (file-name type)
     `(with-safe-alloc (,name
 		       (create-image-from-file ,file-name ,type)
 		       (destroy-image ,name))
@@ -176,8 +178,9 @@ with it. It is advisable to use WITH-IMAGE-FROM-GD2-PART instead."
   (unless (probe-file file-name)
     (error "File ~S could not be found" file-name))
   (when (pathnamep file-name)
-    (setq file-name (namestring #+cmu (ext:unix-namestring file-name)
-				#-cmu (namestring file-name))))
+    (setq file-name
+            #+:cmu (ext:unix-namestring file-name)
+            #-:cmu (namestring file-name)))
   (with-foreign-object (err :int)
     (with-cstring (c-file-name file-name)
       (let ((image (gd-image-create-from-gd2-part-file c-file-name err src-x src-y width height)))
@@ -194,7 +197,7 @@ image can be provied as TYPE or otherwise it will be guessed from the
 PATHNAME-TYPE of FILE-NAME. The image is guaranteed to be destroyed
 before this macro exits."
   ;; we rebind everything so we have left-to-right evaluation
-  (rebinding (file-name src-x src-y width height)
+  (with-rebinding (file-name src-x src-y width height)
     `(with-safe-alloc (,name
 		       (create-image-from-gd2-part ,file-name ,src-x ,src-y ,width ,height)
 		       (destroy-image ,name))
@@ -284,6 +287,7 @@ of element type \(UNSIGNED-BYTE 8). If STREAM is a character stream,
 the user of this function has to make sure the external format yields
 faithful output of all 8-bit characters.")
 
+#-:cl-gd-no-gif
 (make-stream-fn write-gif-to-stream (stream &key (image *default-image*))
 		(gd-image-gif-ptr (img image) size)
                 ((check-type stream stream)
@@ -346,6 +350,7 @@ of all 8-bit characters."
              #'write-gd-to-stream)
            ((:gd2)
 	     #'write-gd2-to-stream)
+           #-:cl-gd-no-gif
 	   ((:gif)
              #'write-gif-to-stream))
          stream rest))
@@ -375,6 +380,7 @@ provided depending on the images's type."
                          :gd)
                        ((string-equal pathname-type "gd2")
                          :gd2)
+                       #-:cl-gd-no-gif
                        ((string-equal pathname-type "gif")
                          :gif)
                        (t

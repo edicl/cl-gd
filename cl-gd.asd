@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.7 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.9 2005/10/04 08:45:44 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -41,16 +41,18 @@
                  :defaults (parse-namestring *load-truename*)))
 
 (defsystem #:cl-gd
-    :components ((:file "packages")
-                 (:file "util" :depends-on ("packages"))
-                 (:file "specials" :depends-on ("util"))
-                 (:file "init" :depends-on ("specials"))
-                 (:file "gd-uffi" :depends-on ("init"))
-                 (:file "transform" :depends-on ("gd-uffi"))
-                 (:file "images" :depends-on ("transform"))
-                 (:file "colors-aux" :depends-on ("transform"))
-                 (:file "colors" :depends-on ("transform"))
-                 (:file "drawing" :depends-on ("transform" "colors-aux"))
-                 (:file "strings" :depends-on ("transform" "colors-aux"))
-                 (:file "misc" :depends-on ("transform")))
-    :depends-on (:uffi))
+  :version "0.5.1"
+  :components ((:file "packages")
+               (:file "util" :depends-on ("packages"))
+               (:file "specials" :depends-on ("util"))
+               (:file "init" :depends-on ("specials"))
+               (:file "gd-uffi" :depends-on ("init"))
+               (:file "transform" :depends-on ("gd-uffi"))
+               (:file "images" :depends-on ("transform"))
+               (:file "colors-aux" :depends-on ("transform"))
+               (:file "colors" :depends-on ("transform"))
+               (:file "drawing" :depends-on ("transform" "colors-aux"))
+               (:file "strings" :depends-on ("transform" "colors-aux"))
+               (:file "misc" :depends-on ("transform")))
+  :depends-on (#-(or :clisp :openmcl) :uffi
+               #+(or :clisp :openmcl) :cffi-uffi-compat))

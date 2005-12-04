@@ -24,7 +24,7 @@
            #:write-wbmp-to-stream
            #:write-gd-to-stream
            #:write-gd2-to-stream
-           #:write-gif-to-stream
+           #-:cl-gd-no-gif #:write-gif-to-stream
            #:write-image-to-stream
            #:write-image-to-file
            #:image-width
@@ -49,6 +49,7 @@
            #:color-components      
            #:draw-polygon
            #:draw-line
+           #:get-pixel
            #:set-pixel
            #:set-pixels
            #:draw-rectangle

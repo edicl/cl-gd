@@ -1,5 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.17 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.18 2005/09/26 12:50:11 edi Exp $
 
 ;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
 
@@ -83,7 +83,7 @@ REVERSE-X is false the x-axis will be oriented as usual in Cartesian
 coordinates, otherwise its direction will be reversed. The same
 applies to REVERSE-Y, of course. If RADIANS is true angles inside of
 BODY will be assumed to be provided in radians, otherwise in degrees."
-  (rebinding (x1 x2 width y1 y2 height reverse-x reverse-y radians image)
+  (with-rebinding (x1 x2 width y1 y2 height reverse-x reverse-y radians image)
     (with-unique-names (image-width image-height
                         stretch-x stretch-y
                         w-transformer h-transformer
