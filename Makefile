@@ -1,7 +1,7 @@
 # this should work for FreeBSD and most Linux distros
 
 cl-gd-glue.so:
-	gcc -fPIC -c cl-gd-glue.c
+	gcc -I/usr/local/include -fPIC -c cl-gd-glue.c
 	ld -shared -lgd -lz -lpng -ljpeg -lfreetype -lm -lc cl-gd-glue.o -o cl-gd-glue.so -L/usr/local/lib
 	rm cl-gd-glue.o
 
