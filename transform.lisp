@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.18 2005/09/26 12:50:11 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.21 2007/07/29 16:37:13 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -91,7 +91,8 @@ BODY will be assumed to be provided in radians, otherwise in degrees."
                         w-inv-transformer h-inv-transformer
                         x-inv-transformer y-inv-transformer
                         angle-transformer)
-      `(progn
+      ;; rebind for thread safety
+      `(let ((*transformers* *transformers*))
         (unless (<= 2 (count-if #'identity (list ,x1 ,x2 ,width)))
           (error "You must provide at least two of X1, X2, and WIDTH."))
         (unless (<= 2 (count-if #'identity (list ,y1 ,y2 ,height)))

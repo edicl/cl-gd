@@ -3,23 +3,29 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <title>CL-GD - Use the GD Graphics Library from Common Lisp</title>
+  <title>CL-GD - Use the GD Graphics library from Common Lisp</title>
   <style type="text/css">
   pre { padding:5px; background-color:#e0e0e0 }
-  a.none { text-decoration: none; color:black }
-  a.none:visited { text-decoration: none; color:black }
-  a.none:active { text-decoration: none; color:black }
-  a.none:hover { text-decoration: none; color:black }
-  a { text-decoration: none; }
-  a:visited { text-decoration: none; }
-  a:active { text-decoration: underline; }
-  a:hover { text-decoration: underline; }
+  h3, h4 { text-decoration: underline; }
+  a { text-decoration: none; padding: 1px 2px 1px 2px; }
+  a:visited { text-decoration: none; padding: 1px 2px 1px 2px; }
+  a:hover { text-decoration: none; padding: 1px 1px 1px 1px; border: 1px solid #000000; } 
+  a:focus { text-decoration: none; padding: 1px 2px 1px 2px; border: none; }
+  a.none { text-decoration: none; padding: 0; }
+  a.none:visited { text-decoration: none; padding: 0; } 
+  a.none:hover { text-decoration: none; border: none; padding: 0; } 
+  a.none:focus { text-decoration: none; border: none; padding: 0; } 
+  a.noborder { text-decoration: none; padding: 0; } 
+  a.noborder:visited { text-decoration: none; padding: 0; } 
+  a.noborder:hover { text-decoration: none; border: none; padding: 0; } 
+  a.noborder:focus { text-decoration: none; border: none; padding: 0; }  
+  pre.none { padding:5px; background-color:#ffffff }
   </style>
 </head>
 
 <body bgcolor=white>
 
-<h2>CL-GD - Use the GD Graphics Library from Common Lisp</h2>
+<h2>CL-GD - Use the GD Graphics library from Common Lisp</h2>
 
 <blockquote>
 <br>&nbsp;<br><h3>Abstract</h3>
@@ -44,7 +50,7 @@ CL-GD comes with a <a
 href="http://www.opensource.org/licenses/bsd-license.php">BSD-style
 license</a> so you can basically do with it whatever you want. Please send bug reports to <a href="#mail">the mailing list</a> mentioned below if you encounter any problems with CL-GD. (I'm glad to fix CL-GD but I can't do much about GD, of course. So if CL-GD basically works for you but you encounter seemingly strange behaviour when drawing please try if and how you can achieve the intended result with GD directly. That would help me a lot. Thanks.)
 <p>
-CL-GD is used by <a href="http://www.eboy.com/">Eboy</a>.
+CL-GD is used by <a href="http://www.quickhoney.com/">QuickHoney</a>.
 
 <p>
 <font color=red>Download shortcut:</font> <a href="http://weitz.de/files/cl-gd.tar.gz">http://weitz.de/files/cl-gd.tar.gz</a>.
@@ -55,8 +61,8 @@ CL-GD is used by <a href="http://www.eboy.com/">Eboy</a>.
 The image to the right was created with this piece of code:
 
 <pre>
-<img alt="chart.png" title="chart.png" align=right border=0 vspace=10 hspace=10 width=200 height=200 src="chart.png">(<a href="#with-image*">with-image*</a> (200 200) <font color=orange>; create 200x200 pixel image</font>
-  (<a href="#allocate-color">allocate-color</a> 68 70 85) <font color=orange>; background color</font>
+<img alt="chart.png" title="chart.png" align=right border=0 vspace=10 hspace=10 width=200 height=200 src="chart.png">(<a class=noborder href="#with-image*">with-image*</a> (200 200) <font color=orange>; create 200x200 pixel image</font>
+  (<a class=noborder href="#allocate-color">allocate-color</a> 68 70 85) <font color=orange>; background color</font>
   (let ((beige (allocate-color 222 200 81))
         (brown (allocate-color 206 150 75))
         (green (allocate-color 104 156 84))
@@ -64,9 +70,9 @@ The image to the right was created with this piece of code:
         (white (allocate-color 255 255 255))
         (two-pi (* 2 pi)))
     <font color=orange>;; move origin to center of image</font>
-    (<a href="#with-transformation">with-transformation</a> (:x1 -100 :x2 100 :y1 -100 :y2 100 :radians t)
+    (<a class=noborder href="#with-transformation">with-transformation</a> (:x1 -100 :x2 100 :y1 -100 :y2 100 :radians t)
       <font color=orange>;; draw some 'pie slices'</font>
-      (<a href="#draw-arc">draw-arc</a> 0 0 130 130 0 (* .6 two-pi)
+      (<a class=noborder href="#draw-arc">draw-arc</a> 0 0 130 130 0 (* .6 two-pi)
                 :center-connect t :filled t :color beige)
       (draw-arc 0 0 130 130 (* .6 two-pi) (* .8 two-pi)
                 :center-connect t :filled t :color brown)
@@ -74,16 +80,16 @@ The image to the right was created with this piece of code:
                 :center-connect t :filled t :color green)
       (draw-arc 0 0 130 130 (* .95 two-pi) two-pi
                 :center-connect t :filled t :color red)
-      (<a href="#with-default-color">with-default-color</a> (white)
-        (<a href="#with-default-font">with-default-font</a> (:small)
-          (<a href="#draw-string">draw-string</a> -8 -30 &quot;60%&quot;)
+      (<a class=noborder href="#with-default-color">with-default-color</a> (white)
+        (<a class=noborder href="#with-default-font">with-default-font</a> (:small)
+          (<a class=noborder href="#draw-string">draw-string</a> -8 -30 &quot;60%&quot;)
           (draw-string -20 40 &quot;20%&quot;)
           (draw-string 20 30 &quot;15%&quot;))
-        (<a href="#draw-freetype-string">draw-freetype-string</a> -90 75 &quot;Global Revenue&quot;
+        (<a class=noborder href="#draw-freetype-string">draw-freetype-string</a> -90 75 &quot;Global Revenue&quot;
                               <font color=orange>;; this assumes that 'DEFAULT_FONTPATH'</font>
                               <font color=orange>;; is set correctly</font>
                               :font-name &quot;verdanab&quot;))))
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;chart.png&quot;
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;chart.png&quot;
                        :compression-level 6 :if-exists :supersede))
 </pre>
 
@@ -138,16 +144,16 @@ See below for more examples.
     <li><a href="#alpha-blending-p"><code>alpha-blending-p</code></a>
     <li><a href="#save-alpha-p"><code>save-alpha-p</code></a>
   </ul>
-  <li><a href="#colors">Styles, brushes, tiles, anti-aliased lines</a>
+  <li><a href="#brushes">Styles, brushes, tiles, anti-aliased lines</a>
   <ul>
     <li><a href="#make-brush"><code>make-brush</code></a>
     <li><a href="#make-tile"><code>make-tile</code></a>
-    <li><a href="#make-tile"><code>make-anti-aliased</code></a>
+    <li><a href="#make-anti-aliased"><code>make-anti-aliased</code></a>
   </ul>
   <li><a href="#transformations">Transformations</a>
   <ul>
     <li><a href="#with-transformation"><code>with-transformation</code></a>
-    <li><a href="#without-transformation"><code>without-transformation</code></a>
+    <li><a href="#without-transformations"><code>without-transformations</code></a>
   </ul>
   <li><a href="#drawing">Drawing and filling</a>
   <ul>
@@ -181,7 +187,7 @@ See below for more examples.
   <li><a href="#misc">Miscellaneous</a>
   <ul>
     <li><a href="#do-rows"><code>do-rows</code></a>
-    <li><a href="#do-pixels-in-rows"><code>do-pixels-in-rows</code></a>
+    <li><a href="#do-pixels-in-row"><code>do-pixels-in-row</code></a>
     <li><a href="#do-pixels"><code>do-pixels</code></a>
     <li><a href="#raw-pixel"><code>raw-pixel</code></a>
     <li><a href="#interlacedp"><code>interlacedp</code></a>
@@ -197,20 +203,22 @@ See below for more examples.
 
 CL-GD together with this documentation can be downloaded from <a
 href="http://weitz.de/files/cl-gd.tar.gz">http://weitz.de/files/cl-gd.tar.gz</a>. The
-current version is 0.5.1. A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&searchon=names&subword=1&version=all&release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
-for <a href="http://www.cliki.net/gentoo">Gentoo Linux</a> thanks to Matthew Kennedy. Otherwise, proceed like this:
+current version is 0.5.6.  A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&amp;searchon=names&amp;subword=1&amp;version=all&amp;release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
+for <a href="http://www.gentoo.org/proj/en/common-lisp/index.xml">Gentoo Linux</a> thanks to Matthew Kennedy. Otherwise, proceed like this:
 <ul>
 <li>Download and install a recent version of <a href="http://www.cliki.net/asdf">asdf</a>.
 <li>Download and install <a href="http://uffi.b9.com/">UFFI</a>. CL-GD needs at least version&nbsp;1.3.4 of UFFI to work properly. However, as of August 2003, only AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported because CL-GD needs the new UFFI macros <a href="http://uffi.b9.com/manual/with-cast-pointer.html"><code>WITH-CAST-POINTER</code></a> and <a href="http://uffi.b9.com/manual/def-foreign-var.html"><code>DEF-FOREIGN-VAR</code></a> which haven't yet been ported to all UFFI platforms.  <b>Note:</b> For CLISP or OpenMCL download and install <a
 href="http://common-lisp.net/project/cffi/">CFFI</a> instead.
-<li>Download and install a recent version of <a href="http://www.boutell.com/gd/">GD</a> and its supporting libraries <a href="http://www.libpng.org/pub/png/">libpng</a>, <a href="http://www.info-zip.org/pub/infozip/zlib/">zlib</a>, <a href="http://www.ijg.org/">libjpeg</a>, <a href="http://www.gnu.org/software/libiconv/">libiconv</a>, and <a href="http://www.freetype.org/">libfreetype</a>. CL-GD has been tested and developed with GD 2.0.28, older version probably won't work. Note that you won't be able to compile CL-GD unless you have installed <em>all</em> supporting libraries. This is different from using GD directly from C where you only have to install the libraries you intend to use.
+<li>Download and install a recent version of <a href="http://www.boutell.com/gd/">GD</a> and its supporting libraries <a href="http://www.libpng.org/pub/png/">libpng</a>, <a href="http://www.info-zip.org/pub/infozip/zlib/">zlib</a>, <a href="http://www.ijg.org/">libjpeg</a>, <a href="http://www.freetype.org/">libfreetype</a>, and maybe <a href="http://www.gnu.org/software/libiconv/">libiconv</a>. CL-GD has been tested and developed with GD 2.0.28, older version probably won't work. Note that you won't be able to compile CL-GD unless you have installed <em>all</em> supporting libraries. This is different from using GD directly from C where you only have to install the libraries you intend to use.
 <li>Download <a href="http://weitz.de/files/cl-gd.tar.gz"><code>cl-gd.tar.gz</code></a>, unzip and untar the file and put the resulting directory wherever you want, then cd into this directory.
 <li>Compile <code>cl-gd-glue.c</code> into a shared library for your platform. On FreeBSD or Linux this would be
 <pre>
 gcc -fPIC -c cl-gd-glue.c
-ld -lgd -lz -lpng -ljpeg -lfreetype -lm -liconv -shared cl-gd-glue.o -o cl-gd-glue.so
+ld -lgd -lz -lpng -ljpeg -lfreetype -lm -shared cl-gd-glue.o -o cl-gd-glue.so
 rm cl-gd-glue.o
 </pre>
+(Note: On older versions of Linux, you might have to add <code>-liconv</code>.)
+<p>
 For Mac OS X, use
 <pre>
 gcc -lgd -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib
@@ -256,6 +264,12 @@ Note: If you're on Windows you might want to try this:
 <li>Start your Lisp and compile CL-GD as described above.
 </ul>
 This works for me on Windows&nbsp;XP&nbsp;pro&nbsp;SP2 with AllegroCL&nbsp;6.2&nbsp;trial as well as with LispWorks&nbsp;4.3.7&nbsp;pro.
+<p>
+Lu&iacute;s Oliveira maintains a <a href="http://darcs.net/">darcs</a>
+repository of CL-GD
+at <a
+href="http://common-lisp.net/~loliveira/ediware/">http://common-lisp.net/~loliveira/ediware/</a>.
+
 
 <br>&nbsp;<br><h3><a name="mail" class=none>Support and mailing lists</a></h3>
 
@@ -267,6 +281,8 @@ subscribe to the <a
 href="http://common-lisp.net/mailman/listinfo/cl-gd-announce">cl-gd-announce
 mailing list</a>. These mailing lists were made available thanks to
 the services of <a href="http://common-lisp.net/">common-lisp.net</a>.
+<p>
+If you want to send patches, please <a href="http://weitz.de/patches.html">read this first</a>.
 
 <br>&nbsp;<br><h3><a href="#contents" name="images" class=none>Images</a></h3>
 
@@ -341,14 +357,14 @@ guaranteed to be <a href="#destroy-image">destroyed</a> before this macro exits.
 </blockquote>
 
 <pre>
-(<a href="#with-image-from-file">with-image-from-file</a> (old &quot;zappa.jpg&quot;)<img vspace=10 hspace=10 border=0 alt="zappa-green.jpg" title="zappa-green.jpg" src="zappa-green.jpg" width=150 height=200 align=right><img vspace=10 hspace=10 border=0 alt="zappa.jpg" title="zappa.jpg" src="zappa.jpg" width=150 height=200 align=right>
+(<a class=noborder href="#with-image-from-file">with-image-from-file</a> (old &quot;zappa.jpg&quot;)<img vspace=10 hspace=10 border=0 alt="zappa-green.jpg" title="zappa-green.jpg" src="zappa-green.jpg" width=150 height=200 align=right><img vspace=10 hspace=10 border=0 alt="zappa.jpg" title="zappa.jpg" src="zappa.jpg" width=150 height=200 align=right>
   (multiple-value-bind (width height)
-      (<a href="#image-size">image-size</a> old)
-    (<a href="#with-image">with-image</a> (new width height)
-      (<a href="#allocate-color">allocate-color</a> 0 255 0 :image new) <font color=orange>; green background</font>
-      (<a href="#copy-image">copy-image</a> old new 0 0 0 0 width height
+      (<a class=noborder href="#image-size">image-size</a> old)
+    (<a class=noborder href="#with-image">with-image</a> (new width height)
+      (<a class=noborder href="#allocate-color">allocate-color</a> 0 255 0 :image new) <font color=orange>; green background</font>
+      (<a class=noborder href="#copy-image">copy-image</a> old new 0 0 0 0 width height
                   :merge 50)
-      (<a href="#write-image-to-file">write-image-to-file</a> &quot;zappa-green.jpg&quot;
+      (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;zappa-green.jpg&quot;
                            :image new
                            :if-exists :supersede))))
 </pre>
@@ -387,7 +403,7 @@ This is just a convenience macro which will execute <code><i>form*</i></code> wi
 <br><a class=none name="with-image-from-gd2-part*"><b>with-image-from-gd2-part*</b> <i>(file-name src-x src-y width height) form*</i> =&gt; <i>results</i></a>
 
 <blockquote><br>
-These are essentially like their asterisk-less counterparts but bind the image to <a href="default-image"><code>*DEFAULT-IMAGE*</code></a> instead.
+These are essentially like their asterisk-less counterparts but bind the image to <a href="#default-image"><code>*DEFAULT-IMAGE*</code></a> instead.
 </blockquote>
 
 
@@ -406,7 +422,7 @@ type checking.)
 <blockquote><br>
 Writes image <code><i>image</i></code> to the stream
 <code><i>stream</i></code> as a JPEG file. If
-<code><i>quality</i></code> is not specified, the default <a href"http://www.ijg.org/">IJG</a> JPEG
+<code><i>quality</i></code> is not specified, the default <a href="http://www.ijg.org/">IJG</a> JPEG
 quality value is used. Otherwise, 
 <code><i>quality</i></code> must be an integer in the range&nbsp;0-100. <code><i>stream</i></code> must be a character stream or a binary
 stream of element type <code>(UNSIGNED-BYTE&nbsp;8)</code>. If STREAM is a character
@@ -537,7 +553,7 @@ first color you allocate will be its background color. Note that
 colors are allocated per image, i.e. you can't allocate a color in one
 image and then use it to draw something in another image.
 <p>
-See also the <a href="#styles">next section</a> for some 'special colors.'
+See also the <a href="#brushes">next section</a> for some 'special colors.'
 
 <p><br>[Special variable]
 <br><a class=none name="default-color"><b>*default-color*</b></a>
@@ -619,19 +635,19 @@ order red, green, blue, alpha.
 
 <pre>
 * (defun foo ()
-    (<a href="#with-image*">with-image*</a> (10 10)
-      (loop for i below <a href="#max-colors">+max-colors+</a> do
+    (<a class=noborder href="#with-image*">with-image*</a> (10 10)
+      (loop for i below <a class=noborder href="#max-colors">+max-colors+</a> do
             <font color=orange>;; allocate enough colors (all gray) to fill the palette</font>
-            (<a href="#allocate-color">allocate-color</a> i i i))
-      (format t &quot;Number of colors allocated: ~A~%&quot; (<a href="#number-of-colors">number-of-colors</a>))
-      (format t &quot;Maximal number of colors: ~A~%&quot; <a href="#max-colors">+max-colors+</a>)
-      (format t &quot;Exact match for red: ~A~%&quot; (<a href="#find-color">find-color</a> 255 0 0 :exact t))
+            (<a class=noborder href="#allocate-color">allocate-color</a> i i i))
+      (format t &quot;Number of colors allocated: ~A~%&quot; (<a class=noborder href="#number-of-colors">number-of-colors</a>))
+      (format t &quot;Maximal number of colors: ~A~%&quot; <a class=noborder href="#max-colors">+max-colors+</a>)
+      (format t &quot;Exact match for red: ~A~%&quot; (<a class=noborder href="#find-color">find-color</a> 255 0 0 :exact t))
       (format t &quot;Red, green, and blue components of 'closest' match for red: ~A~%&quot;
-              (let ((match (<a href="#find-color">find-color</a> 255 0 0)))
+              (let ((match (<a class=noborder href="#find-color">find-color</a> 255 0 0)))
                 (if match
-                  (list (<a href="#color-component">color-component</a> :red match)
-                        (<a href="#color-component">color-component</a> :green match)
-                        (<a href="#color-component">color-component</a> :blue match))))))
+                  (list (<a class=noborder href="#color-component">color-component</a> :red match)
+                        (<a class=noborder href="#color-component">color-component</a> :green match)
+                        (<a class=noborder href="#color-component">color-component</a> :blue match))))))
     (values))
 
 FOO
@@ -701,23 +717,23 @@ Gets and sets whether PNG images will be saved with full alpha channel informati
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (200 100)<img vspace=10 hspace=10 border=0 alt="brushed-arc.png" title="brushed-arc.png" src="brushed-arc.png" width=200 height=100 align=right>
-  (<a href="#allocate-color">allocate-color</a> 255 165 0) <font color=orange>; orange background</font>
-  (<a href="#with-image">with-image</a> (brush 6 6)
-    (let* ((black (<a href="#allocate-color">allocate-color</a> 0 0 0 :image brush)) <font color=orange>; black background</font>
-           (red (<a href="#allocate-color">allocate-color</a> 255 0 0 :image brush))
-           (blue (<a href="#allocate-color">allocate-color</a> 0 0 255 :image brush)))
-      (setf (<a href="#transparent-color">transparent-color</a> brush) black) <font color=orange>; make background transparent</font>
+(<a class=noborder href="#with-image*">with-image*</a> (200 100)<img vspace=10 hspace=10 border=0 alt="brushed-arc.png" title="brushed-arc.png" src="brushed-arc.png" width=200 height=100 align=right>
+  (<a class=noborder href="#allocate-color">allocate-color</a> 255 165 0) <font color=orange>; orange background</font>
+  (<a class=noborder href="#with-image">with-image</a> (brush 6 6)
+    (let* ((black (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 0 :image brush)) <font color=orange>; black background</font>
+           (red (<a class=noborder href="#allocate-color">allocate-color</a> 255 0 0 :image brush))
+           (blue (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 255 :image brush)))
+      (setf (<a class=noborder href="#transparent-color">transparent-color</a> brush) black) <font color=orange>; make background transparent</font>
       <font color=orange>;; now set the pixels in the brush</font>
-      (<a href="#set-pixels">set-pixels</a> '(2 2 2 3 3 2 3 3)
+      (<a class=noborder href="#set-pixels">set-pixels</a> '(2 2 2 3 3 2 3 3)
                   :color blue :image brush)
-      (<a href="#set-pixels">set-pixels</a> '(3 2 3 3 1 2 1 3 4 2 4 3 2 1 3 1 2 4 3 4)
+      (<a class=noborder href="#set-pixels">set-pixels</a> '(3 2 3 3 1 2 1 3 4 2 4 3 2 1 3 1 2 4 3 4)
                   :color red :image brush)
       <font color=orange>;; then use it to draw an arc</font>
-      (<a href="#draw-arc">draw-arc</a> 100 50 180 80 180 300
+      (<a class=noborder href="#draw-arc">draw-arc</a> 100 50 180 80 180 300
                 <font color=orange>;; convert BRUSH to brush</font>
-                :color (<a href="#make-brush">make-brush</a> brush)))
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;brushed-arc.png&quot;
+                :color (<a class=noborder href="#make-brush">make-brush</a> brush)))
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;brushed-arc.png&quot;
                        :compression-level 7
                        :if-exists :supersede)))
 </pre>
@@ -726,7 +742,7 @@ Gets and sets whether PNG images will be saved with full alpha channel informati
 
 Most <a href="#drawing">drawing</a> and <a href="#strings">string</a>
 functions (with <a
-href="draw-freetype-string"><code>DRAW-FREETYPE-STRING</code></a>
+href="#draw-freetype-string"><code>DRAW-FREETYPE-STRING</code></a>
 being the only exception) will, when expecting a <a
 href="#colors">color</a>, also accept other types of arguments. The
 full range of allowed types which can be used for
@@ -765,7 +781,7 @@ full range of allowed types which can be used for
   slightly from the styles described above.
 
   <li>An <em>anti-aliased color</em> as created with <a
-  href="make-anti-aliased"><code>MAKE-ANTI-ALIASED</code></a> for
+  href="#make-anti-aliased"><code>MAKE-ANTI-ALIASED</code></a> for
   drawing lines. When an anti-aliased color is used, the line is drawn
   with anti-aliasing mechanisms to minimize any &quot;jagged&quot;
   appearance.
@@ -793,7 +809,7 @@ used. This introduces a little bit of overhead but feels more 'Lisp-y'
 and intuitive to me.
 
 <p><br>[Function]
-<br><a class=none name="make-brush"><b>make-brush</b> <i>image</i> =&gt; <i>brush</i>
+<br><a class=none name="make-brush"><b>make-brush</b> <i>image</i> =&gt; <i>brush</i></a>
 
 <blockquote><br>
 
@@ -806,7 +822,7 @@ brush - the brush is just a kind of 'tagged' image.
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="make-tile"><b>make-tile</b> <i>image</i> =&gt; <i>tile</i>
+<br><a class=none name="make-tile"><b>make-tile</b> <i>image</i> =&gt; <i>tile</i></a>
 
 <blockquote><br>
 
@@ -819,7 +835,7 @@ tile - the tile is just a kind of 'tagged' image.
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="make-anti-aliased"><b>make-anti-aliased</b> <i>color <tt>&amp;optional</tt>do-not-blend</i> =&gt; <i>color'</i>
+<br><a class=none name="make-anti-aliased"><b>make-anti-aliased</b> <i>color <tt>&amp;optional</tt>do-not-blend</i> =&gt; <i>color'</i></a>
 
 <blockquote><br>
 
@@ -831,30 +847,30 @@ color anti-aliased lines stand out against clearly.
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (150 50)<img vspace=10 hspace=10 border=0 alt="anti-aliased-lines.png" title="anti-aliased-lines.png" src="anti-aliased-lines.png" width=150 height=50 align=right>
-  (let ((orange (<a href="#allocate-color">allocate-color</a> 255 165 0)) <font color=orange>; orange background</font>
-        (white (<a href="#allocate-color">allocate-color</a> 255 255 255))
-        (red ( href="#allocate-color">allocate-color</a> 255 0 0)))
+(<a class=noborder href="#with-image*">with-image*</a> (150 50)<img vspace=10 hspace=10 border=0 alt="anti-aliased-lines.png" title="anti-aliased-lines.png" src="anti-aliased-lines.png" width=150 height=50 align=right>
+  (let ((orange (<a class=noborder href="#allocate-color">allocate-color</a> 255 165 0)) <font color=orange>; orange background</font>
+        (white (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255))
+        (red (<a class=noborder href="#allocate-color">allocate-color</a> 255 0 0)))
     <font color=orange>;; white background rectangle in the middle third</font>
-    (<a href="#draw-rectangle*">draw-rectangle*</a> 50 0 99 49
+    (<a class=noborder href="#draw-rectangle*">draw-rectangle*</a> 50 0 99 49
                     :filled t
                     :color white)
-    (<a href="#with-thickness">with-thickness</a> (2)
+    (<a class=noborder href="#with-thickness">with-thickness</a> (2)
       <font color=orange>;; just a red line</font>
-      (<a href="#draw-line">draw-line</a> 5 10 145 10 :color red)
+      (<a class=noborder href="#draw-line">draw-line</a> 5 10 145 10 :color red)
       <font color=orange>;; anti-aliased red line</font>
-      (<a href="#draw-line">draw-line</a> 5 25 145 25 :color (<a href="#make-anti-aliased">make-anti-aliased</a> red))
+      (<a class=noborder href="#draw-line">draw-line</a> 5 25 145 25 :color (<a class=noborder href="#make-anti-aliased">make-anti-aliased</a> red))
       <font color=orange>;; anti-aliased red line which should stand out against
       ;; orange background</font>
-      (<a href="#draw-line">draw-line</a> 5 40 145 40 :color (<a href="#make-anti-aliased">make-anti-aliased</a> red orange))))
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;anti-aliased-lines.png&quot;
+      (<a class=noborder href="#draw-line">draw-line</a> 5 40 145 40 :color (<a class=noborder href="#make-anti-aliased">make-anti-aliased</a> red orange))))
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;anti-aliased-lines.png&quot;
                        :compression-level 3
                        :if-exists :supersede))
 </pre>
 
 <br>&nbsp;<br><h3><a href="#contents" name="transformations" class=none>Transformations</a></h3>
 
-Usually, CL-GD coordinates and dimensions (width and height) have to be integers. The origin <code>(0,0)</code> of an <a href="#image">image</a> is its upper left corner and all other points like <code>(X,Y)</code> have positive <code>X</code> and <code>Y</code> values. Angles are also provided as integers (in the range&nbsp;0-360) meaning degrees. A <em>transformation</em> provides a way to change this. 
+Usually, CL-GD coordinates and dimensions (width and height) have to be integers. The origin <code>(0,0)</code> of an <a href="#images">image</a> is its upper left corner and all other points like <code>(X,Y)</code> have positive <code>X</code> and <code>Y</code> values. Angles are also provided as integers (in the range&nbsp;0-360) meaning degrees. A <em>transformation</em> provides a way to change this. 
 
 <p><br>[Macro]
 <br><a class=none name="with-transformation"><b>with-transformation</b> <i>(<tt>&amp;key</tt> x1 x2 width y1 y2 height reverse-x reverse-y radians image) form*</i> =&gt; <i>results</i></a>
@@ -939,24 +955,24 @@ only the corresponding part of <code><i>vertices</i></code> is used as input.
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (100 100)<img vspace=10 hspace=10 border=0 alt="triangle.png" title="triangle.png" src="triangle.png" width=100 height=100 align=right>
-  (<a href="#allocate-color">allocate-color</a> 255 255 255) <font color=orange>; white background</font>
-  (let ((red (<a href="#allocate-color">allocate-color</a> 255 0 0))
-        (yellow (<a href="#allocate-color">allocate-color</a> 255 255 0))
-        (orange (<a href="#allocate-color">allocate-color</a> 255 165 0)))
+(<a class=noborder href="#with-image*">with-image*</a> (100 100)<img vspace=10 hspace=10 border=0 alt="triangle.png" title="triangle.png" src="triangle.png" width=100 height=100 align=right>
+  (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255) <font color=orange>; white background</font>
+  (let ((red (<a class=noborder href="#allocate-color">allocate-color</a> 255 0 0))
+        (yellow (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 0))
+        (orange (<a class=noborder href="#allocate-color">allocate-color</a> 255 165 0)))
     <font color=orange>;; thin black border</font>
-    (<a href="#draw-rectangle*">draw-rectangle*</a> 0 0 99 99
-                     :color (<a href="#allocate-color">allocate-color</a> 0 0 0))
+    (<a class=noborder href="#draw-rectangle*">draw-rectangle*</a> 0 0 99 99
+                     :color (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 0))
     <font color=orange>;; line thickness is five pixels</font>
-    (<a href="#with-thickness">with-thickness</a> (5)
+    (<a class=noborder href="#with-thickness">with-thickness</a> (5)
       <font color=orange>;; triangle</font>
-      (<a href="#draw-polygon">draw-polygon</a> (list 10 10 90 50 50 90)
+      (<a class=noborder href="#draw-polygon">draw-polygon</a> (list 10 10 90 50 50 90)
                     <font color=orange>;; styled color</font>
                     :color (list red red red
                                  yellow yellow yellow
                                  nil nil nil
                                  orange orange orange))
-      (<a href="#write-image-to-file">write-image-to-file</a> "triangle.png"
+      (<a class=noborder href="#write-image-to-file">write-image-to-file</a> "triangle.png"
                            :compression-level 8
                            :if-exists :supersede))))
 </pre>
@@ -976,13 +992,13 @@ Draws a filled ellipse with center <code>(<i>center-x</i>,<i>center-y</i>)</code
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (250 150)
-  (<a href="#with-image-from-file">with-image-from-file</a> (zappa &quot;smallzappa.png&quot;)<img vspace=10 hspace=0 border=0 alt="zappa-ellipse.png" title="zappa-ellipse.png" src="zappa-ellipse.png" width=250 height=150 align=right>
-    (setf (<a href="#transparent-color">transparent-color</a>) (<a href="#allocate-color">allocate-color</a> 255 255 255))
-    (<a href="#draw-filled-ellipse">draw-filled-ellipse</a> 125 75 250 150
-                         :color (<a href="#make-tile">make-tile</a> zappa)))
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;zappa-ellipse.png&quot;
-          :if-exists :supersede))
+(<a class=noborder href="#with-image*">with-image*</a> (250 150)
+  (<a class=noborder href="#with-image-from-file">with-image-from-file</a> (zappa &quot;smallzappa.png&quot;)<img vspace=10 hspace=0 border=0 alt="zappa-ellipse.png" title="zappa-ellipse.png" src="zappa-ellipse.png" width=250 height=150 align=right>
+    (setf (<a class=noborder href="#transparent-color">transparent-color</a>) (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255))
+    (<a class=noborder href="#draw-filled-ellipse">draw-filled-ellipse</a> 125 75 250 150
+                         :color (<a class=noborder href="#make-tile">make-tile</a> zappa)))
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;zappa-ellipse.png&quot;
+                       :if-exists :supersede))
 </pre>
 
 <p><br>[Function]
@@ -1004,8 +1020,8 @@ slices' - see <a href="#example">example</a> at the top of the page.). If <code>
 Floods a portion of the <a href="#images">image</a> <code><i>image</i></code> with the <a href="#colors">color</a> <code><i>color</i></code> beginning
 at point <code>(<i>x</i>,<i>y</i>)</code> and extending into the surrounding region. If <code><i>border</i></code>
 is true it must be a <a href="#colors">color</a> and the filling will stop at the specified
-border color. (You can't use <a href="#styles">'special colors'</a> for the border color.) Otherwise only points with the same color as the
-starting point will be colored. If <code><i>color</i></code> is a <a href="#brushes">tile</a> the tile must not have a <a href="#transparent">transparent</a> color.
+border color. (You can't use <a href="#brushes">'special colors'</a> for the border color.) Otherwise only points with the same color as the
+starting point will be colored. If <code><i>color</i></code> is a <a href="#brushes">tile</a> the tile must not have a <a href="#transparent-color">transparent</a> color.
 </blockquote>
 
 <p><br>[Accessor]
@@ -1049,25 +1065,25 @@ is guaranteed to be restored before the macro exits.
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (150 150)<img vspace=10 hspace=10 border=0 alt="clipped-tangent.png" title="clipped-tangent.png" src="clipped-tangent.png" width=150 height=150 align=right>
-  (<a href="#allocate-color">allocate-color</a> 255 255 255) <font color=orange>; white background</font>
+(<a class=noborder href="#with-image*">with-image*</a> (150 150)<img vspace=10 hspace=10 border=0 alt="clipped-tangent.png" title="clipped-tangent.png" src="clipped-tangent.png" width=150 height=150 align=right>
+  (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255) <font color=orange>; white background</font>
   <font color=orange>;; transform such that x axis ranges from (- PI) to PI and y
   ;; axis ranges from -3 to 3</font>
-  (<a href="#with-transformation">with-transformation</a> (:x1 (- pi) :width (* 2 pi) :y1 -3 :y2 3)
-    (let ((black (<a href="#allocate-color">allocate-color</a> 0 0 0))
-          (red (<a href="#allocate-color">allocate-color</a> 255 0 0))
+  (<a class=noborder href="#with-transformation">with-transformation</a> (:x1 (- pi) :width (* 2 pi) :y1 -3 :y2 3)
+    (let ((black (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 0))
+          (red (<a class=noborder href="#allocate-color">allocate-color</a> 255 0 0))
           (rectangle (list (- .4 pi) 2.5 (- pi .4) -2.5)))
-      (<a href="#with-default-color">with-default-color</a> (black)
+      (<a class=noborder href="#with-default-color">with-default-color</a> (black)
         <font color=orange>;; draw axes</font>
-        (<a href="#draw-line">draw-line</a> 0 -3 0 3 :color black)
-        (<a href="#draw-line">draw-line</a> (- pi) 0 pi 0))
+        (<a class=noborder href="#draw-line">draw-line</a> 0 -3 0 3 :color black)
+        (<a class=noborder href="#draw-line">draw-line</a> (- pi) 0 pi 0))
       <font color=orange>;; show clipping rectangle (styled)</font>
-      (<a href="#draw-rectangle">draw-rectangle</a> rectangle :color (list black black black nil black nil))
-      (<a href="#with-clipping-rectangle">with-clipping-rectangle</a> (rectangle)
+      (<a class=noborder href="#draw-rectangle">draw-rectangle</a> rectangle :color (list black black black nil black nil))
+      (<a class=noborder href="#with-clipping-rectangle">with-clipping-rectangle</a> (rectangle)
         <font color=orange>;; draw tangent function</font>
         (loop for x from (- pi) below (* 2 pi) by (/ pi 75) do
-              (<a href="#set-pixel">set-pixel</a> x (tan x) :color red)))))
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;clipped-tangent.png&quot;
+              (<a class=noborder href="#set-pixel">set-pixel</a> x (tan x) :color red)))))
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;clipped-tangent.png&quot;
                        :if-exists :supersede))
 </pre>
 
@@ -1089,7 +1105,7 @@ before the macro exits.
 
 <br>&nbsp;<br><h3><a href="#contents" name="strings" class=none>Characters and strings</a></h3>
 
-CL-GD (actually GD) comes with five included fonts which can be accessed with the keywords <code>:TINY</code>, <code>:SMALL</code>, <code>:MEDIUM</code>, <code>:MEDIUM-BOLD</code> (a synonym for <code>:MEDIUM</code>), <code>:LARGE</code>, and <code>:GIANT</code> and used with  <a href="#draw-string"><code>DRAW-STRING</code></a> and <a href="#draw-char"><code>DRAW-CHAR</code></a>. Using these fonts will make your application portable to all platforms supported by CL-GD (and thus GD). You can also invoke the <a href="http://www.freetype.org/">FreeType library</a> to draw (anti-aliased) strings with arbitrary TrueType fonts, sizes, and angles. This is, however, subject to the availability and location of the corresponding fonts on your target platform.
+CL-GD (actually GD) comes with five included fonts which can be accessed with the keywords <code>:TINY</code>, <code>:SMALL</code>, <code>:MEDIUM</code>, <code>:MEDIUM-BOLD</code> (a synonym for <code>:MEDIUM</code>), <code>:LARGE</code>, and <code>:GIANT</code> and used with  <a href="#draw-string"><code>DRAW-STRING</code></a> and <a href="#draw-character"><code>DRAW-CHARACTER</code></a>. Using these fonts will make your application portable to all platforms supported by CL-GD (and thus GD). You can also invoke the <a href="http://www.freetype.org/">FreeType library</a> to draw (anti-aliased) strings with arbitrary TrueType fonts, sizes, and angles. This is, however, subject to the availability and location of the corresponding fonts on your target platform.
 
 <p><br>[Special variable]
 <br><a class=none name="default-font"><b>*default-font*</b></a>
@@ -1103,7 +1119,7 @@ Whenever a CL-GD string or character function has an optional or keyword argumen
 
 <blockquote><br>
 This is just a convenience macro which will execute <code><i>form*</i></code> with <a href="#default-font"><code>*DEFAULT-FONT*</code></a> bound to <code><i>font</i></code>. But
-note that the fonts used for <a href="#draw-string"><code>DRAW-STRING</code></a>/<a href="#draw-char"><code>DRAW-CHAR</code></a> and <a href="#draw-freetype-string"><code>DRAW-FREETYPE-STRING</code></a> are incompatible
+note that the fonts used for <a href="#draw-string"><code>DRAW-STRING</code></a>/<a href="#draw-character"><code>DRAW-CHARACTER</code></a> and <a href="#draw-freetype-string"><code>DRAW-FREETYPE-STRING</code></a> are incompatible
 </blockquote>
 
 <p><br>[Function]
@@ -1155,21 +1171,21 @@ the partial rendering during bounding rectangle calculation.
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> (200 200)<img vspace=0 hspace=0 border=0 alt="strings.png" title="strings.png" src="strings.png" width=200 height=200 align=right>
+(<a class=noborder href="#with-image*">with-image*</a> (200 200)<img vspace=0 hspace=0 border=0 alt="strings.png" title="strings.png" src="strings.png" width=200 height=200 align=right>
   <font color=orange>;; set background (white) and make it transparent</font>
-  (setf (<a href="#transparent-color">transparent-color</a>)
-          (<a href="#allocate-color">allocate-color</a> 255 255 255))
+  (setf (<a class=noborder href="#transparent-color">transparent-color</a>)
+          (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255))
   (loop for angle from 0 to (* 2 pi) by (/ pi 6)
         for blue downfrom 255 by 20 do
-        (<a href="#draw-freetype-string">draw-freetype-string</a> 100 100 "Common Lisp"
+        (<a class=noborder href="#draw-freetype-string">draw-freetype-string</a> 100 100 "Common Lisp"
                               :font-name &quot;/usr/X11R6/lib/X11/fonts/truetype/georgia.ttf&quot;
                               :angle angle
                               <font color=orange>;; note that ALLOCATE-COLOR won't work
                               ;; here because the anti-aliasing uses
                               ;; up too much colors</font>
-                              :color (<a href="#find-color">find-color</a> 0 0 blue
+                              :color (<a class=noborder href="#find-color">find-color</a> 0 0 blue
                                                  :resolve t)))
-  (<a href="#write-image-to-file">write-image-to-file</a> "strings.png"
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> "strings.png"
                        :if-exists :supersede))
 </pre>
 
@@ -1227,19 +1243,19 @@ you change these values...
 </blockquote>
 
 <pre>
-* (<a href="#with-image*">with-image*</a> (3 3 t) <font color=orange>; true-color image with 3x3 pixels</font>
-    (<a href="#draw-rectangle*">draw-rectangle*</a> 0 0 2 2 :color (<a href="#allocate-color">allocate-color</a> 0 0 0)) <font color=orange>; black background</font>
-    (<a href="#draw-line">draw-line</a> 0 0 2 2 :color (<a href="#allocate-color">allocate-color</a> 255 255 255)) <font color=orange>; white line</font>
-    (<a href="#do-pixels">do-pixels</a> ()
+* (<a class=noborder href="#with-image*">with-image*</a> (3 3 t) <font color=orange>; true-color image with 3x3 pixels</font>
+    (<a class=noborder href="#draw-rectangle*">draw-rectangle*</a> 0 0 2 2 :color (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 0)) <font color=orange>; black background</font>
+    (<a class=noborder href="#draw-line">draw-line</a> 0 0 2 2 :color (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255)) <font color=orange>; white line</font>
+    (<a class=noborder href="#do-pixels">do-pixels</a> ()
       <font color=orange>;; loop through all pixels and change those which arent't black</font>
-      (unless (zerop (<a href="#raw-pixel">raw-pixel</a>))
-        (decf (<a href="#raw-pixel">raw-pixel</a>) #xff)))
-    (<a href="#do-rows">do-rows</a> (y)
+      (unless (zerop (<a class=noborder href="#raw-pixel">raw-pixel</a>))
+        (decf (<a class=noborder href="#raw-pixel">raw-pixel</a>) #xff)))
+    (<a class=noborder href="#do-rows">do-rows</a> (y)
       <font color=orange>;; loop through all rows</font>
       (format t &quot;Starting with row ~A~%&quot; y)
-      (<a href="#do-pixels-in-row">do-pixels-in-row</a> (x)
+      (<a class=noborder href="#do-pixels-in-row">do-pixels-in-row</a> (x)
         <font color=orange>;; loop through all pixels in row</font>
-        (format t &quot;  Pixel &lt;~A,~A&gt; has value ~X~%&quot; x y (<a href="#raw-pixel">raw-pixel</a>)))
+        (format t &quot;  Pixel &lt;~A,~A&gt; has value ~X~%&quot; x y (<a class=noborder href="#raw-pixel">raw-pixel</a>)))
       (format t &quot;Done with row ~A~%&quot; y)))
 Starting with row 0
   Pixel &lt;0,0&gt; has value FFFF00 <font color=orange>; the line is yellow now</font>
@@ -1268,7 +1284,7 @@ Gets or sets whether <code><i>image</i></code> will be stored in an interlaced f
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="differentp"><b>differentp</b> image1 image2</i> =&gt; <i>different</i>
+<br><a class=none name="differentp"><b>differentp</b> <i>image1 image2</i> =&gt; <i>different</i></a>
 
 <blockquote><br>
 Returns <em>false</em> if the two images won't appear different when
@@ -1277,7 +1293,7 @@ the differences between the images.
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="copy-image"><b>copy-image</b> source destination source-x source-y dest-x dest-y width height <tt>&amp;key</tt> resample rotate angle resize dest-width dest-height merge merge-gray</i> =&gt; <i>destination</i></a>
+<br><a class=none name="copy-image"><b>copy-image</b> <i>source destination source-x source-y dest-x dest-y width height <tt>&amp;key</tt> resample rotate angle resize dest-width dest-height merge merge-gray</i> =&gt; <i>destination</i></a>
 
 <blockquote><br>
 Copies (a part of) the <a href="#images">image</a> <code><i>source</i></code> into the image <code><i>destination</i></code>. Copies the
@@ -1307,7 +1323,7 @@ integer, and in radians otherwise. This function is not affected by <a href="#wi
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="copy-palette"><b>copy-palette</b> source destination </i> =&gt; <i>destination</i></a>
+<br><a class=none name="copy-palette"><b>copy-palette</b> <i>source destination </i> =&gt; <i>destination</i></a>
 
 <blockquote><br>
 Copies the palette of the <a href="#images">image</a> <code><i>source</i></code> to the image <code><i>destination</i></code> attempting to
@@ -1315,7 +1331,7 @@ match the colors in the target image to the colors in the source palette.
 </blockquote>
 
 <p><br>[Function]
-<br><a class=none name="true-color-to-palette"><b>true-color-to-palette</b> <tt>&amp;key</tt> dither colors-wanted image</i> =&gt; <i>image</i></a>
+<br><a class=none name="true-color-to-palette"><b>true-color-to-palette</b> <i><tt>&amp;key</tt> dither colors-wanted image</i> =&gt; <i>image</i></a>
 
 <blockquote><br>
 Converts the true color image <code><i>image</i></code> to a palette-based image using
@@ -1331,75 +1347,75 @@ destination image.
 </blockquote>
 
 <pre>
-(<a href="#with-image*">with-image*</a> ((+ 256 384) 384 t)
-  (let ((white (<a href="#allocate-color">allocate-color</a> 255 255 255))
-        (red (<a href="#allocate-color">allocate-color</a> 255 0 0))
-        (green (<a href="#allocate-color">allocate-color</a> 0 255 0))
-        (blue (<a href="#allocate-color">allocate-color</a> 0 0 255))
+(<a class=noborder href="#with-image*">with-image*</a> ((+ 256 384) 384 t)
+  (let ((white (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255))
+        (red (<a class=noborder href="#allocate-color">allocate-color</a> 255 0 0))
+        (green (<a class=noborder href="#allocate-color">allocate-color</a> 0 255 0))
+        (blue (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 255))
         (vertices (list 64 0 0 128 128 128))
-        (image-width (<a href="#image-width">image-width</a>))
-        (image-height (<a href="#image-height">image-height</a>)))
-    (setf (<a href="#transparent-color">transparent-color</a>) white)
-    (<a href="#draw-rectangle*">draw-rectangle*</a> 0 0 image-width image-height :color white)
+        (image-width (<a class=noborder href="#image-width">image-width</a>))
+        (image-height (<a class=noborder href="#image-height">image-height</a>)))
+    (setf (<a class=noborder href="#transparent-color">transparent-color</a>) white)
+    (<a class=noborder href="#draw-rectangle*">draw-rectangle*</a> 0 0 image-width image-height :color white)
     <font color=orange>;; &quot;demoin.png&quot; is part of the GD distribution</font>
-    (<a href="#with-image-from-file">with-image-from-file</a> (in-file &quot;demoin.png&quot;)
-      (<a href="#copy-image">copy-image</a> in-file *default-image*
+    (<a class=noborder href="#with-image-from-file">with-image-from-file</a> (in-file &quot;demoin.png&quot;)
+      (<a class=noborder href="#copy-image">copy-image</a> in-file *default-image*
                   0 0 32 32 192 192
                   :resize t
                   :dest-width 255
                   :dest-height 255
                   :resample t)
       (multiple-value-bind (in-width in-height)
-          (<a href="#image-size">image-size</a> in-file)
+          (<a class=noborder href="#image-size">image-size</a> in-file)
         (loop for a below 360 by 45 do
-              (<a href="#copy-image">copy-image</a> in-file *default-image*
+              (<a class=noborder href="#copy-image">copy-image</a> in-file *default-image*
                           0 0
                           (+ 256 192 (* 128 (cos (* a .0174532925))))
                           (- 192 (* 128 (sin (* a .0174532925))))
                           in-width in-height
                           :rotate t
                           :angle a))
-        (<a href="#with-default-color">with-default-color</a> (green)
-          (<a href="#with-thickness">with-thickness</a> (4)
-            (<a href="#draw-line">draw-line</a> 16 16 240 16)
-            (<a href="#draw-line">draw-line</a> 240 16 240 240)
-            (<a href="#draw-line">draw-line</a> 240 240 16 240)
-            (<a href="#draw-line">draw-line</a> 16 240 16 16))
-          (<a href="#draw-polygon">draw-polygon</a> vertices :filled t))
+        (<a class=noborder href="#with-default-color">with-default-color</a> (green)
+          (<a class=noborder href="#with-thickness">with-thickness</a> (4)
+            (<a class=noborder href="#draw-line">draw-line</a> 16 16 240 16)
+            (<a class=noborder href="#draw-line">draw-line</a> 240 16 240 240)
+            (<a class=noborder href="#draw-line">draw-line</a> 240 240 16 240)
+            (<a class=noborder href="#draw-line">draw-line</a> 16 240 16 16))
+          (<a class=noborder href="#draw-polygon">draw-polygon</a> vertices :filled t))
         (dotimes (i 3)
           (incf (nth (* 2 i) vertices) 128))
-        (<a href="#draw-polygon">draw-polygon</a> vertices
-                      :color (<a href="#make-anti-aliased">make-anti-aliased</a> green)
+        (<a class=noborder href="#draw-polygon">draw-polygon</a> vertices
+                      :color (<a class=noborder href="#make-anti-aliased">make-anti-aliased</a> green)
                       :filled t)
-        (<a href="#with-default-color">with-default-color</a> (blue)
-          (<a href="#draw-arc">draw-arc</a> 128 128 60 20 0 720)
-          (<a href="#draw-arc">draw-arc</a> 128 128 40 40 90 270)
-          (<a href="#fill-image">fill-image</a> 8 8))
-        (<a href="#with-image">with-image</a> (brush 16 16 t)
-          (<a href="#copy-image">copy-image</a> in-file brush
+        (<a class=noborder href="#with-default-color">with-default-color</a> (blue)
+          (<a class=noborder href="#draw-arc">draw-arc</a> 128 128 60 20 0 720)
+          (<a class=noborder href="#draw-arc">draw-arc</a> 128 128 40 40 90 270)
+          (<a class=noborder href="#fill-image">fill-image</a> 8 8))
+        (<a class=noborder href="#with-image">with-image</a> (brush 16 16 t)
+          (<a class=noborder href="#copy-image">copy-image</a> in-file brush
                       0 0 0 0
                       in-width in-height
                       :resize t
-                      :dest-width (<a href="#image-width">image-width</a> brush)
-                      :dest-height (<a href="#image-height">image-height</a> brush))
-          (<a href="#draw-line">draw-line</a> 0 255 255 0
-                     :color (cons (<a href="#make-brush">make-brush</a> brush)
+                      :dest-width (<a class=noborder href="#image-width">image-width</a> brush)
+                      :dest-height (<a class=noborder href="#image-height">image-height</a> brush))
+          (<a class=noborder href="#draw-line">draw-line</a> 0 255 255 0
+                     :color (cons (<a class=noborder href="#make-brush">make-brush</a> brush)
                                   (list nil nil nil nil nil nil nil t))))))
-    (<a href="#with-default-color">with-default-color</a> (red)
-      (<a href="#draw-string">draw-string</a> 32 32 &quot;hi&quot; :font :giant)
-      (<a href="#draw-string">draw-string</a> 64 64 &quot;hi&quot; :font :small))
-    (<a href="#with-clipping-rectangle*">with-clipping-rectangle*</a> (0 (- image-height 100) 100 image-height)
-      (<a href="#with-default-color">with-default-color</a> ((<a href="#make-anti-aliased">make-anti-aliased</a> white))
+    (<a class=noborder href="#with-default-color">with-default-color</a> (red)
+      (<a class=noborder href="#draw-string">draw-string</a> 32 32 &quot;hi&quot; :font :giant)
+      (<a class=noborder href="#draw-string">draw-string</a> 64 64 &quot;hi&quot; :font :small))
+    (<a class=noborder href="#with-clipping-rectangle*">with-clipping-rectangle*</a> (0 (- image-height 100) 100 image-height)
+      (<a class=noborder href="#with-default-color">with-default-color</a> ((<a class=noborder href="#make-anti-aliased">make-anti-aliased</a> white))
         (dotimes (i 100)
-          (<a href="#draw-line">draw-line</a> (random image-width)
+          (<a class=noborder href="#draw-line">draw-line</a> (random image-width)
                      (random image-height)
                      (random image-width)
                      (random image-height))))))
-  (setf (<a href="#interlacedp">interlacedp</a>) t)
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;demoout.png&quot;
+  (setf (<a class=noborder href="#interlacedp">interlacedp</a>) t)
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;demoout.png&quot;
                        :if-exists :supersede)
-  (<a href="#true-color-to-palette">true-color-to-palette</a>)
-  (<a href="#write-image-to-file">write-image-to-file</a> &quot;demooutp.png&quot;
+  (<a class=noborder href="#true-color-to-palette">true-color-to-palette</a>)
+  (<a class=noborder href="#write-image-to-file">write-image-to-file</a> &quot;demooutp.png&quot;
                        :if-exists :supersede))
 </pre>
 
@@ -1416,9 +1432,9 @@ for <a href="http://uffi.b9.com/">UFFI</a> without which CL-GD would
 not have been possible. Kevin was also extremely helpful when I needed
 functionality which wasn't yet part of UFFI. Thanks to <a href="http://huebner.org/">Hans
 H&uuml;bner</a> for the GIF patches. Thanks to <a href='http://bl0rg.net/'>Manuel Odendahl</a> for lots of useful patches.
-Thanks to Luis Oliveira for CLISP/CFFI support.
+Thanks to Luis Oliveira for CLISP/CFFI support and to Bryan O'Connor for OpenMCL support.
 <p>
-$Header: /usr/local/cvsrep/gd/doc/index.html,v 1.56 2005/10/04 08:45:45 edi Exp $
+$Header: /usr/local/cvsrep/gd/doc/index.html,v 1.75 2007/07/29 16:37:15 edi Exp $
 <p><a href="http://weitz.de/index.html">BACK TO MY HOMEPAGE</a>
 
 </body>

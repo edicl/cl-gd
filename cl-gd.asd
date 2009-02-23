@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.9 2005/10/04 08:45:44 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.18 2007/07/29 16:37:13 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -27,32 +27,32 @@
 ;;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-(in-package #:cl-user)
+(in-package :cl-user)
 
-(defpackage #:cl-gd.system
-  (:use #:cl
-        #:asdf)
-  (:export #:*cl-gd-directory*))
+(defpackage :cl-gd.system
+  (:use :cl :asdf)
+  (:export :*cl-gd-directory*))
 
-(in-package #:cl-gd.system)
+(in-package :cl-gd.system)
 
 (defparameter *cl-gd-directory*
   (make-pathname :name nil :type nil :version nil
                  :defaults (parse-namestring *load-truename*)))
 
-(defsystem #:cl-gd
-  :version "0.5.1"
+(defsystem :cl-gd
+  :version "0.5.6"
+  :serial t
   :components ((:file "packages")
-               (:file "util" :depends-on ("packages"))
-               (:file "specials" :depends-on ("util"))
-               (:file "init" :depends-on ("specials"))
-               (:file "gd-uffi" :depends-on ("init"))
-               (:file "transform" :depends-on ("gd-uffi"))
-               (:file "images" :depends-on ("transform"))
-               (:file "colors-aux" :depends-on ("transform"))
-               (:file "colors" :depends-on ("transform"))
-               (:file "drawing" :depends-on ("transform" "colors-aux"))
-               (:file "strings" :depends-on ("transform" "colors-aux"))
-               (:file "misc" :depends-on ("transform")))
-  :depends-on (#-(or :clisp :openmcl) :uffi
-               #+(or :clisp :openmcl) :cffi-uffi-compat))
+               (:file "util")
+               (:file "specials")
+               (:file "init")
+               (:file "gd-uffi")
+               (:file "transform")
+               (:file "images")
+               (:file "colors-aux")
+               (:file "colors")
+               (:file "drawing")
+               (:file "strings")
+               (:file "misc"))
+  :depends-on (#-clisp :uffi
+               #+clisp :cffi-uffi-compat))

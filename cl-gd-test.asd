@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.asd,v 1.8 2005/09/26 12:00:59 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd-test.asd,v 1.11 2007/01/01 23:41:00 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -27,19 +27,18 @@
 ;;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ;;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-(in-package #:cl-user)
+(in-package :cl-user)
 
-(defpackage #:cl-gd-test.system
-  (:use #:cl
-        #:asdf))
+(defpackage :cl-gd-test.system
+  (:use :cl :asdf))
 
-(in-package #:cl-gd-test.system)
+(in-package :cl-gd-test.system)
 
 (defparameter *cl-gd-test-directory*
   (make-pathname :name nil :type nil :version nil
                  :defaults (parse-namestring *load-truename*)))
 
-(defsystem #:cl-gd-test
+(defsystem :cl-gd-test
   :version "0.4.8"
   :components ((:file "cl-gd-test"))
   :depends-on (:cl-gd))

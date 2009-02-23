@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.12 2005/09/26 12:50:11 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.15 2007/02/28 15:47:58 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -124,6 +124,7 @@ greater than 127 are converted to XML character entities."
             (write-char char s)
             else do
             (write-char #\& s)
+            (write-char #\# s)
             (princ char-code s)
             (write-char #\; s)))))
 

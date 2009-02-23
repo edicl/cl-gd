@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/misc.lisp,v 1.13 2005/09/26 12:50:11 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/misc.lisp,v 1.15 2007/01/01 23:41:00 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -220,12 +220,12 @@ destination image."
                 (let ((,raw-pixels (get-slot-value ,img 'gd-image 'pixels)))
                   (declare (type pixels-array ,raw-pixels))
                   (dotimes (,y-var ,height)
-                    (let ((,row (deref-array ,raw-pixels '(:array (* :unsigned-char)) ,y-var)))
+                    (let ((,row (deref-array ,raw-pixels '(:array (* :unsigned-byte)) ,y-var)))
                       (declare (type pixels-row ,row))
                       (macrolet ((do-pixels-in-row ((,x-var) &body ,inner-body)
                                    `(dotimes (,,x-var ,',width)
                                      (macrolet ((raw-pixel ()
-                                                  `(deref-array ,',',row '(:array :unsigned-char) ,',,x-var)))
+                                                  `(deref-array ,',',row '(:array :unsigned-byte) ,',,x-var)))
                                        (locally
                                          ,@,inner-body)))))
                         (locally

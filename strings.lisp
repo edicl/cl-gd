@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/strings.lisp,v 1.16 2005/03/09 14:17:56 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/strings.lisp,v 1.23 2007/04/24 09:01:39 edi Exp $
 
-;;; Copyright (c) 2003-2005, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -30,10 +30,11 @@
 (in-package :cl-gd)
 
 (defmacro with-default-font ((font) &body body)
-  "Execute BODY with *DEFAULT-FONT* bound to FONT so that you don't
-have to provide the FONT keyword/optional argument to string
-functions. But note that the fonts used for DRAW-STRING/DRAW-CHAR and
-DRAW-FREETYPE-STRING are incompatible."
+  "Execute BODY with *DEFAULT-FONT* bound to FONT so that you
+don't have to provide the FONT keyword/optional argument to
+string functions. But note that the fonts used for
+DRAW-STRING/DRAW-CHARACTER and DRAW-FREETYPE-STRING are
+incompatible."
   `(let ((*default-font* ,font))
     ,@body))
 
@@ -132,13 +133,17 @@ rendering of the same string, because of the caching of the partial
 rendering during bounding rectangle calculation."
   (check-type string string)
   (check-type font-name (or pathname string))
-  (check-type color integer)
-  (check-type image image)
+  (unless do-not-draw
+    (check-type color integer)
+    (check-type image image))
   (with-transformed-alternative
       ((x x-transformer)
        (y y-transformer)
        ((deref-array c-bounding-rectangle '(:array :int) i) x-inv-transformer)
        ((deref-array c-bounding-rectangle '(:array :int) (1+ i)) y-inv-transformer))
+    (when do-not-draw
+      (setq color 0
+            image *null-image*))
     (when (pathnamep font-name)
       (setq font-name (namestring font-name)))
     (when convert-chars
@@ -159,21 +164,17 @@ rendering during bounding rectangle calculation."
                                                      'gd-ft-string-extra
                                                      'line-spacing)
                                          (coerce line-spacing 'double-float))
-                               (gd-image-string-ft-ex (if do-not-draw
-                                                          *null-image*
-                                                          (img image))
+                               (gd-image-string-ft-ex (img image)
                                                       c-bounding-rectangle
-                                                          (if anti-aliased color (- color))
-                                                          c-font-name
-                                                          (coerce point-size 'double-float)
-                                                          (coerce angle 'double-float)
-                                                          x y
-                                                          c-string
-                                                          strex)))
+                                                      (if anti-aliased color (- color))
+                                                      c-font-name
+                                                      (coerce point-size 'double-float)
+                                                      (coerce angle 'double-float)
+                                                      x y
+                                                      c-string
+                                                      strex)))
                             (t
-                             (gd-image-string-ft (img (if do-not-draw
-                                                          *null-image*
-                                                          image))
+                             (gd-image-string-ft (img image)
                                                  c-bounding-rectangle
                                                  (if anti-aliased color (- color))
                                                  c-font-name
