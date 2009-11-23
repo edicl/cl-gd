@@ -1,6 +1,6 @@
 Version 0.5.7
 2009-11-22
-Changes WITH-TRANSFORMATIONS so that SBCL doesn't complain (Jeff Cunningham)
+Changed WITH-TRANSFORMATIONS so that SBCL doesn't complain (Jeff Cunningham)
 Fixed typo in documentation (caught by J.P. Larocque)
 
 Version 0.5.6
