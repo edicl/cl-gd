@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/images.lisp,v 1.33 2007/01/01 23:41:00 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/images.lisp,v 1.34 2009/11/23 17:05:39 edi Exp $
 
-;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2009, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -86,8 +86,7 @@ as TYPE or otherwise it will be guessed from the PATHNAME-TYPE of
 FILE-NAME. You are responsible for destroying the image after you're
 done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
   (check-type file-name (or pathname string))
-  (let* ((file-name (truename file-name))
-         (pathname-type (pathname-type file-name))
+  (let* ((pathname-type (pathname-type file-name))
          (%type (or type
                     (cond ((or (string-equal pathname-type "jpg")
                                (string-equal pathname-type "jpeg"))

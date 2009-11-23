@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-USER; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.18 2007/07/29 16:37:13 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/cl-gd.asd,v 1.20 2009/11/23 17:05:38 edi Exp $
 
-;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2009, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -40,7 +40,7 @@
                  :defaults (parse-namestring *load-truename*)))
 
 (defsystem :cl-gd
-  :version "0.5.6"
+  :version "0.5.7"
   :serial t
   :components ((:file "packages")
                (:file "util")
@@ -54,5 +54,5 @@
                (:file "drawing")
                (:file "strings")
                (:file "misc"))
-  :depends-on (#-clisp :uffi
-               #+clisp :cffi-uffi-compat))
+  :depends-on (#-(or :clisp :openmcl) :uffi
+               #+(or :clisp :openmcl) :cffi-uffi-compat))

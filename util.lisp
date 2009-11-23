@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.15 2007/02/28 15:47:58 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/util.lisp,v 1.16 2009/11/23 17:05:39 edi Exp $
 
-;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2009, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions

@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.21 2007/07/29 16:37:13 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/transform.lisp,v 1.23 2009/11/23 17:05:39 edi Exp $
 
-;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2009, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
@@ -72,7 +72,10 @@ macro."))
   "Like ROUND but make sure result isn't longer than 32 bits."
   (mod (round x) +most-positive-unsigned-byte-32+))
 
-(defmacro with-transformation ((&key x1 x2 width y1 y2 height reverse-x reverse-y (radians t) (image '*default-image*)) &body body)
+(defmacro with-transformation ((&key (x1 0 x1set) (x2 0 x2set) (width 0 wset)
+                                     (y1 0 y1set) (y2 0 y2set) (height 0 hset)
+                                     reverse-x reverse-y (radians t) (image '*default-image*))
+                               &body body)
   "Executes BODY such that all points and width/height data are
 subject to a simple affine transformation defined by the keyword
 parameters. The new x-axis of IMAGE will start at X1 and end at X2 and
@@ -93,24 +96,19 @@ BODY will be assumed to be provided in radians, otherwise in degrees."
                         angle-transformer)
       ;; rebind for thread safety
       `(let ((*transformers* *transformers*))
-        (unless (<= 2 (count-if #'identity (list ,x1 ,x2 ,width)))
-          (error "You must provide at least two of X1, X2, and WIDTH."))
-        (unless (<= 2 (count-if #'identity (list ,y1 ,y2 ,height)))
-          (error "You must provide at least two of Y1, Y2, and HEIGHT."))
-        (when (and ,x1 ,x2 ,width
-                   (/= ,width (- ,x2 ,x1)))
-          (error "X1, X2, and WIDTH don't match. Try to provide just two of the three arguments."))
-        (when (and ,y1 ,y2 ,height
-                   (/= ,height (- ,y2 ,y1)))
-          (error "Y1, Y2, and HEIGHT don't match. Try to provide just two of the three arguments."))
-        ;; kludgy code to keep SBCL quiet
-        (unless ,x1 (setq ,x1 (- ,x2 ,width)))
-        (unless ,x2 (setq ,x2 (+ ,x1 ,width)))
-        (unless ,width (setq ,width (- ,x2 ,x1)))
-        (unless ,y1 (setq ,y1 (- ,y2 ,height)))
-        (unless ,y2 (setq ,y2 (+ ,y1 ,height)))
-        (unless ,height (setq ,height (- ,y2 ,y1)))
-        (multiple-value-bind (,image-width ,image-height)
+         (macrolet ((checkargs (a1 a1set a2 a2set aspan aspanset c lbl)
+                      `(progn
+                         (cond ((and ,a1set ,a2set) (setq ,aspan (- ,a2 ,a1)))
+                               ((and ,a1set ,aspanset) (setq ,a2 (+ ,a1 ,aspan)))
+                               ((and ,a2set ,aspanset) (setq ,a1 (- ,a2 ,aspan)))
+                               (t (error "Two of ~c1, ~:*~c2, or ~a must be provided." ,c ,lbl)))
+                         (unless (> ,aspan 0)
+                           (error "~c1 must be smaller than ~:*~c2." ,c))
+                         (unless (< (abs (/ (- ,a2 (+ ,a1 ,aspan)) ,aspan)) 1.e-5)
+                           (error "~c1, ~:*~c2, and ~a don't match.  Try to provide just two of the three arguments." ,c ,lbl)))))
+           (checkargs ,x1 ,x1set ,x2 ,x2set ,width ,wset #\x "width")
+           (checkargs ,y1 ,y1set ,y2 ,y2set ,height ,hset #\y "height"))
+         (multiple-value-bind (,image-width ,image-height)
             (without-transformations
              (image-size ,image))
           (let* ((,stretch-x (/ ,image-width ,width))

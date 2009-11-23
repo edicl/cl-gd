@@ -1,10 +1,15 @@
+Version 0.5.7
+2009-11-22
+Changes WITH-TRANSFORMATIONS so that SBCL doesn't complain (Jeff Cunningham)
+Fixed typo in documentation (caught by J.P. Larocque)
+
 Version 0.5.6
 2007-07-29
-Make WITH-TRANSFORMATIONS thread-safe (thanks to Alain Picard)
+Made WITH-TRANSFORMATIONS thread-safe (thanks to Alain Picard)
 
 Version 0.5.5
 2007-04-24
-Ugh, fix the fix once more (again thanks to Jong-won Choi)
+Ugh, fixed the fix once more (again thanks to Jong-won Choi)
 
 Version 0.5.4
 2007-04-06
@@ -16,7 +21,7 @@ Fixed bug in DRAW-FREETYPE-STRING (reported by Andrei Stebakov)
 
 Version 0.5.2
 2007-02-28
-Fix CONVERT-TO-CHAR-REFERENCES (bug caught by Luo Yong)
+Fixed CONVERT-TO-CHAR-REFERENCES (bug caught by Luo Yong)
 Documentation fixes (thanks to Yoni Rabkin Katzenell)
 
 Version 0.5.1

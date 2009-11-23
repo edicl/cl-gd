@@ -1,7 +1,7 @@
 ;;; -*- Mode: LISP; Syntax: COMMON-LISP; Package: CL-GD; Base: 10 -*-
-;;; $Header: /usr/local/cvsrep/gd/colors.lisp,v 1.25 2007/01/01 23:41:00 edi Exp $
+;;; $Header: /usr/local/cvsrep/gd/colors.lisp,v 1.26 2009/11/23 17:05:38 edi Exp $
 
-;;; Copyright (c) 2003-2007, Dr. Edmund Weitz.  All rights reserved.
+;;; Copyright (c) 2003-2009, Dr. Edmund Weitz.  All rights reserved.
 
 ;;; Redistribution and use in source and binary forms, with or without
 ;;; modification, are permitted provided that the following conditions
