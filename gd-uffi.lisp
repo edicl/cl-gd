@@ -74,12 +74,6 @@
   (cx2 :int)
   (cy2 :int))
 
-;; XXX evil hack
-#+(and :openmcl :64-bit-target)
-(defmethod cffi::foreign-type-alignment ((type uffi-array-type))
-  4)
-
-
 (def-type pixels-array (* (* :unsigned-char)))
 (def-type pixels-row (* :unsigned-char))
 (def-type t-pixels-array (* (* :int)))
