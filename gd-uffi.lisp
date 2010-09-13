@@ -35,7 +35,7 @@
   (sx :int)
   (sy :int)
   (colors-total :int)
-  (red (:array :int #.+max-colors+) :offset 20)
+  (red (:array :int #.+max-colors+))
   (green (:array :int #.+max-colors+))
   (blue (:array :int #.+max-colors+))
   (open (:array :int #.+max-colors+))
