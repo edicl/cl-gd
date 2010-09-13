@@ -220,12 +220,12 @@ destination image."
                 (let ((,raw-pixels (get-slot-value ,img 'gd-image 'pixels)))
                   (declare (type pixels-array ,raw-pixels))
                   (dotimes (,y-var ,height)
-                    (let ((,row (deref-array ,raw-pixels '(:array (* :unsigned-char)) ,y-var)))
+                    (let ((,row (deref-array ,raw-pixels '(:array (* :unsigned-byte)) ,y-var)))
                       (declare (type pixels-row ,row))
                       (macrolet ((do-pixels-in-row ((,x-var) &body ,inner-body)
                                    `(dotimes (,,x-var ,',width)
                                      (macrolet ((raw-pixel ()
-                                                  `(deref-array ,',',row '(:array :unsigned-char) ,',,x-var)))
+                                                  `(deref-array ,',',row '(:array :unsigned-byte) ,',,x-var)))
                                        (locally
                                          ,@,inner-body)))))
                         (locally

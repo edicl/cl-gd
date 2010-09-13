@@ -35,7 +35,7 @@
   (sx :int)
   (sy :int)
   (colors-total :int)
-  (red (:array :int #.+max-colors+))
+  (red (:array :int #.+max-colors+) :offset 20)
   (green (:array :int #.+max-colors+))
   (blue (:array :int #.+max-colors+))
   (open (:array :int #.+max-colors+))
@@ -73,6 +73,12 @@
   (cy1 :int)
   (cx2 :int)
   (cy2 :int))
+
+;; XXX evil hack
+#+(and :openmcl :64-bit-target)
+(defmethod cffi::foreign-type-alignment ((type uffi-array-type))
+  4)
+
 
 (def-type pixels-array (* (* :unsigned-char)))
 (def-type pixels-row (* :unsigned-char))

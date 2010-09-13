@@ -8,4 +8,4 @@ cl-gd-glue.so:
 # this should work for Mac OS X
 
 cl-gd-glue.dylib:
-	gcc -arch i386 -lgd -lpng -lz -lfreetype -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib -I/opt/local/include -L/opt/local/lib
+	gcc -arch i386 -arch x86_64 -lgif -lgd -lpng -lz -lfreetype -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib -I/opt/local/include -L/opt/local/lib
