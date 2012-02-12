@@ -200,7 +200,7 @@ information."
   (check-type image image)
   (not (zerop (get-slot-value (img image) 'gd-image 'save-alpha-flag))))
 
-(defun (setf save-alpha-p) (save &key (image *default-image*))
+(defun (setf save-alpha-p) (save &optional (image *default-image*))
   "Determines whether PNG images will be saved with full alpha channel
 information."
   (check-type image image)
