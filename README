@@ -7,47 +7,37 @@ CL-GD also supports Nikodemus Siivola's HYPERDOC, see
 
 1. Installation (see doc/index.html for Windows instructions)
 
-1.1. Download and install a recent version of asdf.
+1.1. Download and install a recent version of GD and its supporting
+     libraries.  Please use your operating system's package manager to
+     install the "development" version of the GD library.  On Ubuntu
+     Linux, this can be achieved with the command:
 
-1.2. Download and install UFFI. CL-GD needs at least version 1.3.4 of
-     UFFI to work properly. However, as of August 2003, only
-     AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported
-     because CL-GD needs the new UFFI macros WITH-CAST-POINTER and
-     DEF-FOREIGN-VAR which haven't yet been ported to all UFFI
-     platforms.
+       apt-get install libgd2-xpm-dev
 
-1.3. Download and install a recent version of GD and its supporting
-     libraries libpng, zlib, libjpeg, libiconv, and libfreetype. CL-GD has
-     been tested with GD 2.0.33, versions older than 2.0.28 won't
-     work. Note that you won't be able to compile CL-GD unless you have
-     installed all supporting libraries. This is different from using
-     GD directly from C where you only have to install the libraries
-     you intend to use.
+     GD depends on several other libraries to handle different
+     graphics formats.  These should be installed by your package
+     manager automatically.  If you cannot use or do not have a
+     package manager that includes GD, you'll have to follow the GD
+     installation instructions (http://www.boutell.com/gd/).  Note
+     that you won't be able to compile CL-GD unless you have installed
+     all supporting libraries. This is different from using GD
+     directly from C where you only have to install the libraries you
+     intend to use.
 
-1.4. Unzip and untar the file cl-gd.tgz and put the resulting
-     directory wherever you want, then cd into this directory.
+1.2. Install cl-gd and its Lisp dependencies using quicklisp
+     (http://quicklisp.org/).
 
-1.5. Compile cl-gd-glue.c into a shared library for your platform. On
-     Linux this would be
+1.3. Compile cl-gd-glue.c into a shared library for your platform.  A
+     simple Makefile is included in the cl-gd source directory.
 
-       gcc -fPIC -c cl-gd-glue.c
-       ld -lgd -lz -lpng -ljpeg -lfreetype -lm -liconv -shared cl-gd-glue.o -o cl-gd-glue.so
-       rm cl-gd-glue.o
+     For FreeBSD and Linux, just type
 
-     For Mac OS X, use
+       make
 
-       gcc -lgd -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib
+     For OSX, type 
 
-1.6. Make sure that cl-gd.asd can be seen from asdf (this is usually
-     achieved by a symbolic link), start your favorite Lisp, and compile
-     CL-GD:
+       make cl-gd-glue.dylib
 
-       (asdf:oos 'asdf:compile-op :cl-gd)
-
-     From now on you can simply load CL-GD into a running Lisp image
-     with
-
-       (asdf:oos 'asdf:load-op :cl-gd)
 
 2. Test
 

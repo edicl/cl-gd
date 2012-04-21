@@ -1,3 +1,9 @@
+Version 0.5.8
+2012-04-21
+Update documentation to refer to Quicklisp for installation
+Correct (setf save-alpha-p) to use &optional instead of &key (Stas Boukarev)
+Fix for Clozure CL on 64bit OSX (Manuel Odendahl)
+
 Version 0.5.7
 2009-11-22
 Changed WITH-TRANSFORMATIONS so that SBCL doesn't complain (Jeff Cunningham)

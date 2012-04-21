@@ -203,37 +203,37 @@ See below for more examples.
 
 CL-GD together with this documentation can be downloaded from <a
 href="http://weitz.de/files/cl-gd.tar.gz">http://weitz.de/files/cl-gd.tar.gz</a>. The
-current version is 0.5.7.  A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&amp;searchon=names&amp;subword=1&amp;version=all&amp;release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
+current version is 0.5.8.  A <a href="http://packages.debian.org/cgi-bin/search_packages.pl?keywords=cl-gd&amp;searchon=names&amp;subword=1&amp;version=all&amp;release=all">Debian package</a> is available thanks to <a href="http://pvaneynd.mailworks.org/">Peter van Eynde</a> and <a href="http://b9.com/">Kevin Rosenberg</a>, so if you're on Debian you should have no problems installing CL-GD. There's also a port
 for <a href="http://www.gentoo.org/proj/en/common-lisp/index.xml">Gentoo Linux</a> thanks to Matthew Kennedy. Otherwise, proceed like this:
 <ul>
-<li>Download and install a recent version of <a href="http://www.cliki.net/asdf">asdf</a>.
-<li>Download and install <a href="http://uffi.b9.com/">UFFI</a>. CL-GD needs at least version&nbsp;1.3.4 of UFFI to work properly. However, as of August 2003, only AllegroCL, CMUCL, LispWorks, SBCL, and SCL are fully supported because CL-GD needs the new UFFI macros <a href="http://uffi.b9.com/manual/with-cast-pointer.html"><code>WITH-CAST-POINTER</code></a> and <a href="http://uffi.b9.com/manual/def-foreign-var.html"><code>DEF-FOREIGN-VAR</code></a> which haven't yet been ported to all UFFI platforms.  <b>Note:</b> For CLISP or OpenMCL download and install <a
-href="http://common-lisp.net/project/cffi/">CFFI</a> instead.
-<li>Download and install a recent version of <a href="http://www.boutell.com/gd/">GD</a> and its supporting libraries <a href="http://www.libpng.org/pub/png/">libpng</a>, <a href="http://www.info-zip.org/pub/infozip/zlib/">zlib</a>, <a href="http://www.ijg.org/">libjpeg</a>, <a href="http://www.freetype.org/">libfreetype</a>, and maybe <a href="http://www.gnu.org/software/libiconv/">libiconv</a>. CL-GD has been tested and developed with GD 2.0.28, older version probably won't work. Note that you won't be able to compile CL-GD unless you have installed <em>all</em> supporting libraries. This is different from using GD directly from C where you only have to install the libraries you intend to use.
-<li>Download <a href="http://weitz.de/files/cl-gd.tar.gz"><code>cl-gd.tar.gz</code></a>, unzip and untar the file and put the resulting directory wherever you want, then cd into this directory.
-<li>Compile <code>cl-gd-glue.c</code> into a shared library for your platform. On FreeBSD or Linux this would be
+  <li>Download and install a recent version of GD and its supporting
+     libraries.  Please use your operating system's package manager to
+     install the "development" version of the GD library.  On Ubuntu
+     Linux, this can be achieved with the command:
+    <pre>
+      apt-get install libgd2-xpm-dev
+    </pre>
+     GD depends on several other libraries to handle different
+     graphics formats.  These should be installed by your package
+     manager automatically.  If you cannot use or do not have a
+     package manager that includes GD, you'll have to follow the GD
+     installation instructions (http://www.boutell.com/gd/).  Note
+     that you won't be able to compile CL-GD unless you have installed
+     all supporting libraries. This is different from using GD
+     directly from C where you only have to install the libraries you
+     intend to use.</li>
+  <li>Install cl-gd and its Lisp dependencies using <a href="http://quicklisp.org/">Quicklisp</a></li>
+  <li>Compile <code>cl-gd-glue.c</code> into a shared library for your platform. On FreeBSD or Linux this would be
 <pre>
-gcc -fPIC -c cl-gd-glue.c
-ld -lgd -lz -lpng -ljpeg -lfreetype -lm -shared cl-gd-glue.o -o cl-gd-glue.so
-rm cl-gd-glue.o
+  make
+</pre>
+and on OSX it would be
+<pre>
+  make cl-gd-glue.dylib
 </pre>
 (Note: On older versions of Linux, you might have to add <code>-liconv</code>.)
-<p>
-For Mac OS X, use
-<pre>
-gcc -lgd -ljpeg -dynamiclib cl-gd-glue.c -o cl-gd-glue.dylib
-</pre>
-<li>Make sure that <code>cl-gd.asd</code> can be seen from asdf (this is usually achieved by a symbolic link), start your favorite Lisp, and compile CL-GD:
-<pre>
-(asdf:oos 'asdf:compile-op :cl-gd)
-</pre>
-<li>From now on you can simply load CL-GD into a running Lisp image with
-<pre>
-(asdf:oos 'asdf:load-op :cl-gd)
-</pre>
-<li>To build <em>without</em> GIF support compile the C library with the option <code>-DGD_DONT_USE_GIF</code> and push the symbol <code>:CL-GD-NO-GIF</code> onto <a href="http://www.lispworks.com/documentation/HyperSpec/Body/v_featur.htm"><code>*FEATURES*</code></a> <em>before</em> compiling CL-GD.
-
-<li>CL-GD comes with a simple test suite that can be used to check if it's
+  </li>
+  <li>CL-GD comes with a simple test suite that can be used to check if it's
 basically working. Note that this'll only test a subset of CL-GD. To
 run the tests load CL-GD and then
 <pre>

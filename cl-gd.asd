@@ -40,8 +40,9 @@
                  :defaults (parse-namestring *load-truename*)))
 
 (defsystem :cl-gd
-  :version "0.5.7"
+  :version "0.5.8"
   :serial t
+  :description "Interface to the GD graphics library"
   :components ((:file "packages")
                (:file "util")
                (:file "specials")
