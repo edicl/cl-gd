@@ -121,6 +121,11 @@ WITH-FONT.")
 (defconstant +gd-cmp-true-color+ 256
   "One image is a true-color image, the other one is palette-based.")
 
+(defconstant +gd-disposal-unknown+ 0)
+(defconstant +gd-disposal-none+ 1)
+(defconstant +gd-disposal-restore-background+ 2)
+(defconstant +gd-disposal-restore-previous+ 2)
+
 (defvar *shared-library-directories*
   `(,(namestring (make-pathname :name nil
                                 :type nil

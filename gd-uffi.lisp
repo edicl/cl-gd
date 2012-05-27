@@ -729,3 +729,28 @@
     ((ptr :pointer-void))
   :returning :void
   :module "gd")
+
+(def-function ("gdImageGifAnimBeginWrap" gd-image-gif-anim-begin-wrap)
+    ((im gd-image-ptr)
+     (filename :cstring)
+     (global-cm :int)
+     (loops :int))
+  :returning :pointer-void
+  :module "gd")
+
+(def-function ("gdImageGifAnimAdd" gd-image-gif-anim-add)
+    ((im gd-image-ptr)
+     (out :pointer-void)
+     (local-cm :int)
+     (left-ofs :int)
+     (top-ofs :int)
+     (delay :int)
+     (disposal :int)
+     (previm gd-image-ptr))
+  :returning :void
+  :module "gd")
+
+(def-function ("gdImageGifAnimEndWrap" gd-image-gif-anim-end-wrap)
+    ((out :pointer-void))
+  :returning :void
+  :module "gd")

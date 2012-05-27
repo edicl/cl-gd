@@ -185,3 +185,27 @@ int gdImageGetGetInterlaced (gdImagePtr im) {
 int gdImageGetGetTransparent (gdImagePtr im) {
   return gdImageGetTransparent(im);
 }
+
+/* GIF animation support */
+
+void*
+gdImageGifAnimBeginWrap(gdImagePtr im,
+                        char* filename,
+                        int globalCM,
+                        int loops)
+{
+  FILE* out = fopen(filename, "w");
+
+  if (out) {
+    gdImageGifAnimBegin(im, out, globalCM, loops);
+  }
+
+  return out;
+}
+
+void
+gdImageGifAnimEndWrap(void* out)
+{
+  gdImageGifAnimEnd(out);
+  fclose(out);
+}

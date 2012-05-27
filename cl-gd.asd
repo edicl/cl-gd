@@ -40,7 +40,7 @@
                  :defaults (parse-namestring *load-truename*)))
 
 (defsystem :cl-gd
-  :version "0.5.8"
+  :version "0.6.0"
   :serial t
   :description "Interface to the GD graphics library"
   :components ((:file "packages")
@@ -54,6 +54,7 @@
                (:file "colors")
                (:file "drawing")
                (:file "strings")
-               (:file "misc"))
+               (:file "misc")
+               (:file "animated-gif"))
   :depends-on (#-(or :clisp :openmcl) :uffi
                #+(or :clisp :openmcl) :cffi-uffi-compat))
