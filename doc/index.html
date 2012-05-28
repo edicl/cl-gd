@@ -1203,12 +1203,16 @@ read.
 <p>
 In order to create an animated GIF, a background image must be created
 which defines the canvas for the animation.  Then, the animation is
-created using the WITH-ANIMATED-GIF macro and images are added to the
-animation with ADD-IMAGE-TO-ANIMATION.
+created using the <a class=noborder
+href="#with-animated-gif">with-animated-gif</a> macro and images are added
+to the animation with <a class=noborder
+href="#add-image-to-animation">add-image-to-animation</a>.
 <p>
 The color map can either be shared by all frames, or each frame can
 have its own color map.  If a shared color map is desired, the
-:GLOBAL-COLOR-MAP-P keyword argument of WITH-ANIMATED-GIF must be set.
+<code><i>:global-color-map-p</i></code> keyword argument
+of <a class=noborder href="#with-animated-gif">with-animated-gif</a> must
+be set to a true value.
 
 <p><br>[Macro]
 <br><a class=none name="with-animated-gif"><b>with-animated-gif</b> <i>(filename <tt>&amp;key</tt>
@@ -1224,15 +1228,14 @@ normally need to be set, but it may be useful when multiple animated
 GIFs need to be created at the same time.  Pass a symbol to use as
 context variable name.  <code><i>background-image</i></code> specifies
 the background image to use for the animation, it defaults to
-*DEFAULT-IMAGE*.  <code><i>global-color-map-p</i></code> specifies
-whether a global colormap that is shared between all frames should be
-used, or each frame has its own
-colormap.  <code><i>loop-count</i></code> sets the loop counter.  -1
-means loop forever, 0 means that the animation is executed once,
-positive values indicate the number of
-repetitions.  <code><i>default-delay</i></code> indicates the default
-frame delay in 1/100s of a second.  It can be overridden for each
-fream in ADD-IMAGE-TO-ANIMATION.
+<a class=noborder href="#*default-image*">*default-image*</a>.  <code><i>global-color-map-p</i></code>
+specifies whether a global colormap that is shared between all frames
+should be used, or each frame has its own
+colormap.  <code><i>loop-count</i></code> sets the loop counter.  -1 means
+loop forever, 0 means that the animation is executed once, positive values
+indicate the number of repetitions.  <code><i>default-delay</i></code>
+indicates the default frame delay in 1/100s of a second.  It can be
+overridden for each fream in <a class=noborder href="#add-image-to-animation">add-image-to-animation</a>.
 </blockquote>
 
 <p><br>[Function]
@@ -1241,40 +1244,44 @@ fream in ADD-IMAGE-TO-ANIMATION.
 
 <blockquote><br>
 
-Add one frame to an animated GIF.  <code><i>image</i></code> is the
-image to add.  <code><i>local-color-map-p</i></code>, if non-NIL,
-specifies that the image has a local color map and should not use the
-global color map.  <code><i>left-offset</i></code>
-and <code><i>top-offset</i></code> specify where this frame should be
-placed on the background.  <code><i>delay</i></code> specifies the
-delay for this frame in 1/100s of a
-second.  <code><i>disposal</i></code> specifies how the frame is
-treated after it has been displayed.  It can be one of :NONE (the
-frame just stays on the background), :RESTORE-BACKGROUND (the affected
-area will be set to the first color of the palette) or
-:RESTORE-PREVIOUS (the previous contents of the image is
-restored).  <code><i>last-image</i></code> can be specified to enable
-the GIF animation optimizer.  If specified, only the changed pixels
-will be contained in the frame.  This works best with a global color
-map, and a transparent color is required for it to work properly.
+Add one frame to an animated GIF.  <code><i>image</i></code> is the image
+to add.  <code><i>local-color-map-p</i></code>, if non-NIL, specifies that
+the frame should not use the global color
+map.  <code><i>left-offset</i></code> and <code><i>top-offset</i></code>
+specify where this frame should be placed on the
+background.  <code><i>delay</i></code> specifies the delay for this frame
+in 1/100s of a second.  <code><i>disposal</i></code> specifies how the
+frame is treated after it has been displayed.  It can be one
+of <code><i>:none</i></code> (the frame just stays on the
+background), <code><i>:restore-background</i></code> (the affected area
+will be set to the first color of the palette) or
+<code><i>:restore-previous</i></code> (the previous contents of the image
+is restored).  <code><i>last-image</i></code> can be specified to enable
+the GIF animation optimizer.  If specified, only the changed pixels will
+be contained in the frame.  This works best with a global color map, and a
+transparent color is required for it to work properly.
+The <code><i>top-offset</i></code> and <code><i>top-offset</i></code> are
+ignored when optimizing is enabled, and <code><i>disposal</i></code> must
+be specified as <code><i>:none</i></code>.
 </blockquote>
 
 <pre>
 (<a class=noborder href="#with-image*">with-image*</a> (100 100)
-  (<a class=noborder href="#with-animated-gif">with-animated-gif</a> ("test-anim.gif"
-                      :global-color-map-p nil
-                      :loop-count -1
-                      :default-delay 5)
-    (loop with last-image
-          for i from 0 upto 100 by 10
-          for cim = (<a class=noborder href="#create-image">create-image</a> 100 100)
-          do (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 0 :image cim)
-             (<a class=noborder href="#draw-arc">draw-arc</a> 50 50 i i 0 360 :filled t :color (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 255 :image cim) :image cim)
-             (<a class=noborder href="#add-image-to-animation">add-image-to-animation</a> cim :last-image last-image)
-             (when last-image
-               (<a class=noborder href="#destroy-image">destroy-image</a> last-image))
-             (setf last-image cim)
-          finally (<a class=noborder href="#destroy-image">destroy-image</a> last-image))))
+  (setf (<a class=noborder href="#transparent-color">transparent-color</a>) (<a class=noborder href="#allocate-color">allocate-color</a> 255 255 255))
+  (let ((blue (<a class=noborder href="#allocate-color">allocate-color</a> 0 0 255)))
+    (<a class=noborder href="#with-animated-gif">with-animated-gif</a> ("test-anim.gif"
+                        :global-color-map-p t
+                        :loop-count -1
+                        :default-delay 5)
+      (loop with last-image
+            for i from 0 below 100 by 10
+            for cim = (<a class=noborder href="#create-image">create-image</a> 100 100)
+            do (<a class=noborder href="#draw-arc">draw-arc</a> 50 50 i i 0 360 :filled t :color blue :image cim)
+               (<a class=noborder href="#add-image-to-animation">add-image-to-animation</a> cim :last-image last-image)
+               (when last-image
+                 (<a class=noborder href="#destroy-image">destroy-image</a> last-image))
+               (setf last-image cim)
+            finally (<a class=noborder href="#destroy-image">destroy-image</a> last-image)))))
 </pre>
 
 <br>&nbsp;<br><h3><a href="#contents" class=none name="misc">Miscellaneous</a></h3>
