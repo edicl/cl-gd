@@ -29,6 +29,14 @@
 
 (in-package :cl-gd)
 
+(defmethod print-object ((image image) stream)
+  (print-unreadable-object (image stream :identity t :type t)
+    (format stream "ptr ~X size ~D/~D (~:[true color~;~:*~D color~:P~])"
+            (uffi:pointer-address (img image))
+            (image-width image) (image-height image)
+            (unless (true-color-p image)
+              (number-of-colors :image image)))))
+
 (defun create-image (width height &optional true-color)
   "Allocates and returns a GD image structure with size WIDTH x
 HEIGHT. Creates a true color image if TRUE-COLOR is true. You are
