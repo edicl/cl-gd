@@ -33,7 +33,7 @@
   "Returns the GD image which is the current brush of IMAGE \(or NIL
 if there is no current brush)."
   (check-type image image)
-  (let ((brush (get-slot-value (img image) 'gd-image 'brush)))
+  (let ((brush (get-slot-value (img image) '(:struct gd-image) 'brush)))
     (if (null-pointer-p brush)
       nil
       brush)))
@@ -50,7 +50,7 @@ for IMAGE."
   "Returns the GD image which is the current tile of IMAGE \(or NIL
 if there is no current tile)."
   (check-type image image)
-  (let ((tile (get-slot-value (img image) 'gd-image 'tile)))
+  (let ((tile (get-slot-value (img image) '(:struct gd-image) 'tile)))
     (if (null-pointer-p tile)
       nil
       tile)))
@@ -66,8 +66,8 @@ for IMAGE."
 (defun current-style (&optional (image *default-image*))
   "Returns the current style of IMAGE as a list."
   (check-type image image)
-  (let ((style-length (get-slot-value (img image) 'gd-image 'style-length))
-        (style (get-slot-value (img image) 'gd-image 'style)))
+  (let ((style-length (get-slot-value (img image) '(:struct gd-image) 'style-length))
+        (style (get-slot-value (img image) '(:struct gd-image) 'style)))
     (loop for i below style-length
           collect (let ((color (deref-array style '(:array :int) i)))
                     (if (= color +transparent+)
@@ -77,8 +77,8 @@ for IMAGE."
 (defun current-style* (&key (image *default-image*))
   "Returns the current style of IMAGE as an array."
   (check-type image image)
-  (let ((style-length (get-slot-value (img image) 'gd-image 'style-length))
-        (style (get-slot-value (img image) 'gd-image 'style)))
+  (let ((style-length (get-slot-value (img image) '(:struct gd-image) 'style-length))
+        (style (get-slot-value (img image) '(:struct gd-image) 'style)))
     (loop with result = (make-array style-length)
           for i below style-length
           do (setf (aref result i)

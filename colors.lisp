@@ -90,7 +90,7 @@ support transparency."
 (defun true-color-p (&optional (image *default-image*))
   "Returns true iff IMAGE is a true color image."
   (check-type image image)
-  (not (zerop (get-slot-value (img image) 'gd-image 'true-color))))
+  (not (zerop (get-slot-value (img image) '(:struct gd-image) 'true-color))))
 
 (defun number-of-colors (&key (image *default-image*))
   "Returns the number of color allocated in IMAGE. Returns NIL if
@@ -98,7 +98,7 @@ IMAGE is a true color image."
   (check-type image image)
   (if (true-color-p image)
     nil
-    (get-slot-value (img image) 'gd-image 'colors-total)))
+    (get-slot-value (img image) '(:struct gd-image) 'colors-total)))
 
 (defun find-color (red green blue &key alpha exact hwb resolve (image *default-image*))
   "Tries to find and/or allocate a color from IMAGE's color
@@ -149,7 +149,7 @@ time"))
 this is measured in pixels and is NOT affected by
 WITH-TRANSFORMATION."
   (check-type image image)
-  (get-slot-value (img image) 'gd-image 'thick))
+  (get-slot-value (img image) '(:struct gd-image) 'thick))
 
 (defun (setf thickness) (thickness &optional (image *default-image*))
   "Sets the width of lines drawn by the drawing functions. Note that
@@ -182,7 +182,7 @@ their alpha channel information will determine how much of the
 underlying color will shine through \(return value is true). This is
 only meaningful for true color images."
   (check-type image image)
-  (not (zerop (get-slot-value (img image) 'gd-image 'alpha-blending-flag))))
+  (not (zerop (get-slot-value (img image) '(:struct gd-image) 'alpha-blending-flag))))
 
 (defun (setf alpha-blending-p) (blending &optional (image *default-image*))
   "Determines whether pixels drawn on IMAGE will be copied literally
@@ -198,7 +198,7 @@ only meaningful for true color images."
   "Returns whether PNG images will be saved with full alpha channel
 information."
   (check-type image image)
-  (not (zerop (get-slot-value (img image) 'gd-image 'save-alpha-flag))))
+  (not (zerop (get-slot-value (img image) '(:struct gd-image) 'save-alpha-flag))))
 
 (defun (setf save-alpha-p) (save &optional (image *default-image*))
   "Determines whether PNG images will be saved with full alpha channel

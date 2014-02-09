@@ -142,17 +142,17 @@ only the corresponding part of VERTICES is used as input."))
     (unless (and (>= effective-length 6)
                  (evenp effective-length))
       (error "We need an even number of at least six vertices"))
-    (with-safe-alloc (arr (allocate-foreign-object 'gd-point (/ effective-length 2))
+    (with-safe-alloc (arr (allocate-foreign-object '(:struct-pointer gd-point) (/ effective-length 2))
                           (free-foreign-object arr))
       (with-color-argument
           (with-transformed-alternative
               (((aref vertices i) x-transformer)
                ((aref vertices (1+ i)) y-transformer))
             (loop for i from start below end by 2
-                  for point-ptr = (deref-array arr '(:array gd-point) (/ (- i start) 2))
-                  do (setf (get-slot-value point-ptr 'gd-point 'x)
+                  for point-ptr = (deref-array arr '(:array (:struct-pointer gd-point)) (/ (- i start) 2))
+                  do (setf (get-slot-value point-ptr '(:struct-pointer gd-point) 'x)
                              (aref vertices i)
-                           (get-slot-value point-ptr 'gd-point 'y)
+                           (get-slot-value point-ptr '(:struct-pointer gd-point) 'y)
                              (aref vertices (1+ i))))
             (funcall (if filled
                        #'gd-image-filled-polygon
@@ -168,7 +168,7 @@ only the corresponding part of VERTICES is used as input."))
     (unless (and (>= effective-length 6)
                  (evenp effective-length))
       (error "We need an even number of at least six vertices"))
-    (with-safe-alloc (arr (allocate-foreign-object 'gd-point (/ effective-length 2))
+    (with-safe-alloc (arr (allocate-foreign-object '(:struct gd-point) (/ effective-length 2))
                           (free-foreign-object arr))
       (with-color-argument
           (with-transformed-alternative
@@ -179,10 +179,10 @@ only the corresponding part of VERTICES is used as input."))
                   ;; because of your simple WITH-TRANSFORMED-ALTERNATIVE
                   ;; macro which would get confused
                   for x/y on (nthcdr start vertices) by #'cddr
-                  for point-ptr = (deref-array arr '(:array gd-point) (/ i 2))
-                  do (setf (get-slot-value point-ptr 'gd-point 'x)
+                  for point-ptr = (deref-array arr '(:array (:struct gd-point)) (/ i 2))
+                  do (setf (get-slot-value point-ptr '(:struct-pointer gd-point) 'x)
                              (first x/y)
-                           (get-slot-value point-ptr 'gd-point 'y)
+                           (get-slot-value point-ptr '(:struct-pointer gd-point) 'y)
                              (second x/y)))
             (funcall (if filled
                        #'gd-image-filled-polygon

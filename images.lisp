@@ -140,8 +140,8 @@ done with it. It is advisable to use WITH-IMAGE-FROM-FILE instead."
                         (t
                           (error "Could not create image from ~A file ~S: errno was ~A"
                                  %type file-name (deref-pointer err :int)))))
-                (t (let ((image (make-image image)))
-		     image))))))))
+                (t
+                 (make-image image))))))))
 
 (defmacro with-image-from-file ((name file-name &optional type) &body body)
   "Creates an image from the file specified by FILE-NAME \(which is

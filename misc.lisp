@@ -203,7 +203,7 @@ destination image."
               (,true-color-p (true-color-p ,image)))
         (declare (fixnum ,width ,height))
         (cond (,true-color-p
-                (let ((,raw-pixels (get-slot-value ,img 'gd-image 't-pixels)))
+                (let ((,raw-pixels (get-slot-value ,img '(:struct gd-image) 't-pixels)))
                   (declare (type t-pixels-array ,raw-pixels))
                   (dotimes (,y-var ,height)
                     (let ((,row (deref-array ,raw-pixels '(:array (* :int)) ,y-var)))
@@ -217,7 +217,7 @@ destination image."
                         (locally
                           ,@body))))))
               (t 
-                (let ((,raw-pixels (get-slot-value ,img 'gd-image 'pixels)))
+                (let ((,raw-pixels (get-slot-value ,img '(:struct gd-image) 'pixels)))
                   (declare (type pixels-array ,raw-pixels))
                   (dotimes (,y-var ,height)
                     (let ((,row (deref-array ,raw-pixels '(:array (* :unsigned-byte)) ,y-var)))
