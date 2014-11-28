@@ -1,3 +1,9 @@
+Version 0.6.1
+2014-11-28
+update support information (Hans Huebner)
+add /usr/local as default tree when compiling .dylib (Hans Huebner)
+add print-object method for images (Hans Huebner)
+
 Version 0.6.0
 2012-05-28
 Add animated GIF support
