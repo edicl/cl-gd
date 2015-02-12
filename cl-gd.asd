@@ -43,6 +43,7 @@
   :version "0.6.1"
   :serial t
   :description "Interface to the GD graphics library"
+  :defsystem-depends-on (:external-program)
   :components ((:file "packages")
                (:file "util")
                (:file "specials")
@@ -56,5 +57,12 @@
                (:file "strings")
                (:file "misc")
                (:file "animated-gif"))
+  :perform (compile-op :before (op c)
+    (declare (ignore op c))
+    (sb-posix:chdir (asdf:system-source-directory :cl-gd))
+    #+darwin
+    (funcall (symbol-function (intern "RUN" :external-program)) "/usr/bin/make" '("cl-gd-glue.dylib"))
+    #-darwin
+    (funcall (symbol-function (intern "RUN" :external-program)) "/usr/bin/make" nil))
   :depends-on (#-(or :clisp :openmcl) :uffi
                #+(or :clisp :openmcl) :cffi-uffi-compat))
