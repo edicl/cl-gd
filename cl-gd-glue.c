@@ -29,10 +29,10 @@
 #include "gd.h"
 
 gdImagePtr gdImageCreateFromJpegFile (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
-  
-  if (in = fopen(filename, "rb")) {
+
+  if (in) {
     im = gdImageCreateFromJpeg(in);
     if (im == NULL) {
       *err = 0;
@@ -47,10 +47,10 @@ gdImagePtr gdImageCreateFromJpegFile (char *filename, int *err) {
 
 #ifndef GD_DONT_USE_GIF
 gdImagePtr gdImageCreateFromGifFile (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromGif(in);
     if (im == NULL) {
       *err = 0;
@@ -65,10 +65,10 @@ gdImagePtr gdImageCreateFromGifFile (char *filename, int *err) {
 #endif
 
 gdImagePtr gdImageCreateFromPngFile (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromPng(in);
     if (im == NULL) {
       *err = 0;
@@ -82,10 +82,10 @@ gdImagePtr gdImageCreateFromPngFile (char *filename, int *err) {
 }
 
 gdImagePtr gdImageCreateFromGdFile (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromGd(in);
     if (im == NULL) {
       *err = 0;
@@ -99,10 +99,10 @@ gdImagePtr gdImageCreateFromGdFile (char *filename, int *err) {
 }
 
 gdImagePtr gdImageCreateFromGd2File (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromGd2(in);
     if (im == NULL) {
       *err = 0;
@@ -116,10 +116,10 @@ gdImagePtr gdImageCreateFromGd2File (char *filename, int *err) {
 }
 
 gdImagePtr gdImageCreateFromGd2PartFile (char *filename, int *err, int srcX, int srcY, int w, int h) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromGd2Part(in, srcX, srcY, w, h);
     if (im == NULL) {
       *err = 0;
@@ -133,10 +133,10 @@ gdImagePtr gdImageCreateFromGd2PartFile (char *filename, int *err, int srcX, int
 }
 
 gdImagePtr gdImageCreateFromXbmFile (char *filename, int *err) {
-  FILE *in;
+  FILE *in = fopen(filename, "rb");
   gdImagePtr im;
   
-  if (in = fopen(filename, "rb")) {
+  if (in) {
     im = gdImageCreateFromXbm(in);
     if (im == NULL) {
       *err = 0;
